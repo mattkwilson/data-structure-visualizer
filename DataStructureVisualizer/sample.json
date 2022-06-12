@@ -1,0 +1,16 @@
+{
+  "array": [
+    {
+      "fileName": "src/test.java",
+      "line": 26,
+      "name": "arr",
+      "structType": "ArrayList",
+      "contents": [
+        13,
+        26,
+        32,
+        2
+      ]
+    }
+  ]
+}
