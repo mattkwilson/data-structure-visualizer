@@ -19,21 +19,12 @@ public class Analyzer {
         this.instanceNumber = instanceNumber;
     }
 
-    public <T> void analyze(Collection<T> collection) {
+    public void analyze(Object object) {
         StackTraceElement stack = new Throwable().getStackTrace()[1];
         String fileName = stack.getFileName();
         int lineNumber = stack.getLineNumber();
-        String contents = collection.toString();
-        String structType = collection.getClass().getName();
-        addState(fileName, lineNumber, structType, contents);
-    }
-
-    public <K, V> void analyze(HashMap<K, V> map) {
-        StackTraceElement stack = new Throwable().getStackTrace()[1];
-        String fileName = stack.getFileName();
-        int lineNumber = stack.getLineNumber();
-        String contents = map.toString();
-        String structType = map.getClass().toString();
+        String contents = object.toString();
+        String structType = object.getClass().toString();
         addState(fileName, lineNumber, structType, contents);
     }
 
@@ -53,6 +44,7 @@ public class Analyzer {
             writer.write(states.toString());
             writer.flush();
             writer.close();
+            System.out.println("saved JSON at: " + name + "_" + instanceNumber + ".json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
