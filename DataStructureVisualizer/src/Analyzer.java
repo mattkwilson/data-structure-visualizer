@@ -19,7 +19,13 @@ public class Analyzer {
         this.instanceNumber = instanceNumber;
     }
 
+    public void setInstance() {
+        // TODO: set the field instance
+    }
+
     public <T> void analyze(Collection<T> collection) {
+        // TODO: verify argument matches current instance
+
         StackTraceElement stack = new Throwable().getStackTrace()[1];
         String fileName = stack.getFileName();
         int lineNumber = stack.getLineNumber();
@@ -29,6 +35,8 @@ public class Analyzer {
     }
 
     public <K, V> void analyze(HashMap<K, V> map) {
+        // TODO: verify argument matches current instance
+
         StackTraceElement stack = new Throwable().getStackTrace()[1];
         String fileName = stack.getFileName();
         int lineNumber = stack.getLineNumber();

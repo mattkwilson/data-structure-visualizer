@@ -1,11 +1,21 @@
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Modifier;
+import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.expr.AssignExpr;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.expr.VariableDeclarationExpr;
+import com.github.javaparser.ast.stmt.Statement;
 import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
 
+import javax.swing.plaf.nimbus.State;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,30 +40,46 @@ public class Instrumentor {
         this.fieldName = fieldName;
     }
 
-    private void instrumentPublicField() {
-        System.out.println("Instrumenting public field...");
-        // TODO: Matt
+    private void instrumentProject(List<ClassOrInterfaceDeclaration> classes, FieldDeclaration field) {
+        classes.forEach(classDec -> instrumentClass(classDec, field));
     }
 
-    private void instrumentPrivateField() {
-        System.out.println("Instrumenting private field...");
-        // get the cu of the class under analysis
-        // get all the methods in my class
-        // filter based on scope
-        // filter based the modifying methods list
-        // inject
-        // TODO: Tarek
+    private void instrumentClass(ClassOrInterfaceDeclaration classDec, FieldDeclaration field) {
+        System.out.println("Instrumenting class: " + classDec.getNameAsString());
+        List<MethodDeclaration> methods = classDec.findAll(MethodDeclaration.class);
+        methods.forEach(method -> instrumentMethod(method, field));
+    }
+
+    private void instrumentMethod(MethodDeclaration method, FieldDeclaration field) {
+        System.out.println("Instrumenting method: " + method.getNameAsString());
+        List<Class> modifyingMethods = getModifyingMethods(field.getVariable(0));
+        List<Expression> expressions = new ArrayList<>();
+        // for each method - find all modifying statements
+        // injection - analyze
+        modifyingMethods.forEach(modifyingMethod -> expressions.addAll(method.findAll(modifyingMethod)));
+        expressions.forEach(this::injectAnalyzer);
+        // for each field assignment
+        // injection - set the instance
+        method.findAll(AssignExpr.class).forEach(this::injectSetInstance);
+    }
+
+    private void injectAnalyzer(Expression expression) {
+        // TODO: implement
+    }
+
+    private void injectSetInstance(Expression expression) {
+        // TODO: implement
     }
 
     /**
      * Supports Lists and Map for now.
      * */
-    private List<String> getModifyingMethods(String type) {
+    private List<Class> getModifyingMethods(VariableDeclarator variable) {
         // look at the type
         // if it is List -> return [add, remove, ...]
         // if Map return [...]
         // TODO: Tarek
-        return null;
+        return Arrays.stream(new Class[] { MethodCallExpr.class }).toList();
     }
 
     /**
@@ -85,25 +111,8 @@ public class Instrumentor {
             throw new InvalidFieldName();
         }
         FieldDeclaration field = (FieldDeclaration) variable.getParentNode().get();
-        // Call the right function based on modifier
-        List<Modifier.Keyword> modifiers = field.getModifiers().stream().map(Modifier::getKeyword).toList();
-        switch (modifiers.size()) {
-            case 2:
-                if (!modifiers.contains(Modifier.Keyword.FINAL)) {
-                    throw new InvalidFieldName();
-                }
-            case 1:
-                if (modifiers.contains(Modifier.Keyword.PUBLIC)) {
-                    instrumentPublicField();
-                } else if (modifiers.contains(Modifier.Keyword.PRIVATE)) {
-                    instrumentPrivateField();
-                } else {
-                    throw new InvalidFieldName();
-                }
-                break;
-            default:
-                throw new InvalidFieldName();
-        }
+
+        instrumentProject(classes, field);
         System.out.println("Finished instrumenting the code!");
     }
 
