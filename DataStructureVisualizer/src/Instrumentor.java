@@ -37,7 +37,23 @@ public class Instrumentor {
 
     private void instrumentPrivateField() {
         System.out.println("Instrumenting private field...");
+        // get the cu of the class under analysis
+        // get all the methods in my class
+        // filter based on scope
+        // filter based the modifying methods list
+        // inject
         // TODO: Tarek
+    }
+
+    /**
+     * Supports Lists and Map for now.
+     * */
+    private List<String> getModifyingMethods(String type) {
+        // look at the type
+        // if it is List -> return [add, remove, ...]
+        // if Map return [...]
+        // TODO: Tarek
+        return null;
     }
 
     /**
