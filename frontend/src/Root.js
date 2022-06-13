@@ -5,7 +5,7 @@ import {useState} from "react";
 
 function Root() {
     const array = [];
-    const [step, setStep] = useState(0);
+    let [step, setStep] = useState(-1);
     const [fileName, setFileName] = useState();
     const [line, setLine] = useState();
     const [name, setName] = useState();
@@ -13,7 +13,7 @@ function Root() {
     const [contents, setContents] = useState();
 
     function readJson() {
-        const sample = JSON.parse('{"array": [{"fileName": "src/test.java","line": 26,"name": "arr","structType": "ArrayList","contents": [13,26,32,2]},{"fileName": "src/test2.java","line": 29,"name": "areeer","structType": "ArrayList","contents": [1,2,3,4]}]}');
+        const sample = JSON.parse('{"array": [{"fileName": "src/test.java","line": 26,"name": "arr","structType": "ArrayList","contents": [13,26,32,2]},{"fileName": "src/test2.java","line": 29,"name": "areeer","structType": "ArrayList","contents": [1,2,3,4]}, {"fileName": "src/test2.java","line": 32,"name": "areeer","structType": "ArrayList","contents": [1,5,7,4]}]}');
         for (const step of sample.array) {
             array.push({
                 "fileName": step["fileName"],
@@ -27,20 +27,21 @@ function Root() {
 
 
     function onClickPrevious() {
+        // alert(step)
         if (step > 0) {
-            const previousStep = step - 1
-            setStep(previousStep)
+            setStep(--step)
             setStepData()
         }
+
     }
 
     function onClickNext() {
+        // alert(step)
         if (step < (array.length - 1)) {
-            const nextStep = step + 1
-            setStep(nextStep)
-
+            setStep(++step)
+            setStepData()
         }
-        setStepData()
+
     }
 
     function setStepData() {
