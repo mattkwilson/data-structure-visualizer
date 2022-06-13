@@ -47,7 +47,7 @@ public class Analyzer {
         states.put(state);
     }
 
-    private void writeJSON() {
+    public void writeJSON() {
         try {
             FileWriter writer = new FileWriter(name + "_" + instanceNumber + ".json");
             writer.write(states.toString());
