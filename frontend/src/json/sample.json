@@ -11,6 +11,68 @@
         32,
         2
       ]
+    },
+    {
+      "fileName": "src/test2.java",
+      "line": 29,
+      "name": "arr",
+      "structType": "ArrayList",
+      "contents": [
+        13,
+        26,
+        32,
+        4
+      ]
+    },
+    {
+      "fileName": "src/test2.java",
+      "line": 32,
+      "name": "arr",
+      "structType": "ArrayList",
+      "contents": [
+        13,
+        5,
+        32,
+        4
+      ]
+    },
+    {
+      "fileName": "src/test2.java",
+      "line": 32,
+      "name": "arr",
+      "structType": "ArrayList",
+      "contents": [
+        13,
+        5,
+        32,
+        4,
+        7
+      ]
+    },
+    {
+      "fileName": "src/test2.java",
+      "line": 32,
+      "name": "arr",
+      "structType": "ArrayList",
+      "contents": [
+        13,
+        55,
+        32,
+        47,
+        7
+      ]
+    },
+    {
+      "fileName": "src/test2.java",
+      "line": 32,
+      "name": "arr",
+      "structType": "ArrayList",
+      "contents": [
+        13,
+        32,
+        47,
+        7
+      ]
     }
   ]
 }

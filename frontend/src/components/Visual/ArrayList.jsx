@@ -6,7 +6,7 @@ export default function ArrayList(props) {
             <tr>
                 {props.contents.map((element, i) => {
                     return(
-                        <td>{element}</td>
+                        <td className = {`td${props.redPositions.includes(i) ? '-red' : ''}`}> {element}</td>
                     )
                 })}
             </tr>
@@ -14,4 +14,4 @@ export default function ArrayList(props) {
     )
 }
 
-// <span className='td${props.color === 'red' ? '-red':''}'>
+// <td className = {`td ${i === 1 ? '-red' : ''} `}> {element}</td>

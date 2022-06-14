@@ -5,17 +5,23 @@
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
 }
 
-td, th {
-    border: 1px solid #000000;
-    text-align: left;
+th {
+    border: 2.5px solid #000000;
     padding: 8px;
 }
 
-td-red {
-    border: 1px solid #ff0000;
-    text-align: left;
+.td {
+    border: 2.5px solid #000000;
+    text-align: center;
+    min-width: 1vw;
+    padding: 8px;
+}
+
+.td-red {
+    border: 2.6px solid #ff0000;
+    text-align: center;
+    min-width: 1vw;
     padding: 8px;
 }

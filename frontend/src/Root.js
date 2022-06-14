@@ -12,6 +12,7 @@ function Root() {
     const [name, setName] = useState();
     const [structType, setStructType] = useState();
     const [contents, setContents] = useState();
+    const [redPositions, setRedPositions] = useState([]);
 
     function readJson() {
         // var request = new XMLHttpRequest();
@@ -34,7 +35,6 @@ function Root() {
 
 
     function onClickPrevious() {
-        // alert(step)
         if (step > 0) {
             setStep(--step)
             setStepData()
@@ -43,7 +43,6 @@ function Root() {
     }
 
     function onClickNext() {
-        // alert(step)
         if (step < (array.length - 1)) {
             setStep(++step)
             setStepData()
@@ -56,7 +55,24 @@ function Root() {
         setLine(array[step].line)
         setName(array[step].name)
         setStructType(array[step].structType)
+        redPositionHelper(step)
         setContents(array[step].contents)
+    }
+
+    function redPositionHelper(newContent) {
+        if(structType === "ArrayList" && step !== 0) {
+            const newStepContents = array[step].contents;
+            const previousStepContents = array[step - 1].contents
+            const redPositions = [];
+            for (let i = 0; i < newStepContents.length; i++) {
+                if (previousStepContents[i] !== newStepContents[i]) {
+                    redPositions.push(i);
+                }
+            }
+            setRedPositions(redPositions)
+        } else {
+            setRedPositions([])
+        }
     }
 
     readJson()
@@ -72,7 +88,7 @@ function Root() {
 
             <div className="right">
                 <div className="centered">
-                    <Visual name={name} contents={contents} structType={structType}/>
+                    <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}/>
                     <input type='button' value='Previous Step' onClick={onClickPrevious}/>
                     <input type='button' value='Next Step' onClick={onClickNext}/>
                 </div>
