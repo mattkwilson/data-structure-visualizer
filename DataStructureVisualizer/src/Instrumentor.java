@@ -1,6 +1,4 @@
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.Modifier;
-import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -8,12 +6,9 @@ import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.AssignExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.VariableDeclarationExpr;
-import com.github.javaparser.ast.stmt.Statement;
 import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
 
-import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -86,6 +81,10 @@ public class Instrumentor {
 
     private void createSetInstanceStatement() {
         // TODO: implement Tarik
+    }
+
+    private void injectWriteJson() {
+        // TODO: implement Matt
     }
 
     /**
