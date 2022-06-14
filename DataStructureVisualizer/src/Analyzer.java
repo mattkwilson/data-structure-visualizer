@@ -22,10 +22,14 @@ public class Analyzer {
         this.instanceNumber = instanceNumber;
     }
 
-    public void setInstance(Object instance) {
+    public void createInstance(Object instance, String name) {
         // instanceMap.put(instance, new JSONArray());
         // add instance to map
         // TODO: implement
+    }
+
+    public void setInstance(Object instance, String name) {
+
     }
 
     public void analyze(Object object) {
