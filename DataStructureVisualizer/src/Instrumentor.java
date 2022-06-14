@@ -64,11 +64,28 @@ public class Instrumentor {
     }
 
     private void injectAnalyzer(Expression expression) {
-        // TODO: implement
+        // TODO: implement Matt
+
     }
 
     private void injectSetInstance(Expression expression) {
-        // TODO: implement
+        // TODO: implement Tarik
+    }
+
+    private void addImportStatements() {
+        // TODO: implement Tarik
+    }
+
+    private void addCompilationUnitAnalyzer() {
+        // TODO: implement Matt
+    }
+
+    private void createAnalyzeStatement() {
+        // TODO: implement Matt
+    }
+
+    private void createSetInstanceStatement() {
+        // TODO: implement Tarik
     }
 
     /**
