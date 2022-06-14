@@ -1,6 +1,4 @@
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.Modifier;
-import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -8,13 +6,10 @@ import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.AssignExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.VariableDeclarationExpr;
-import com.github.javaparser.ast.stmt.Statement;
 import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
+import exceptions.UnsupportedFieldType;
 
-import javax.swing.plaf.nimbus.State;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,20 +42,21 @@ public class Instrumentor {
     private void instrumentClass(ClassOrInterfaceDeclaration classDec, FieldDeclaration field) {
         System.out.println("Instrumenting class: " + classDec.getNameAsString());
         List<MethodDeclaration> methods = classDec.findAll(MethodDeclaration.class);
+        // TODO: find ObjectCreationExpr so we can inject setInstance first line in constructor.
         methods.forEach(method -> instrumentMethod(method, field));
     }
 
     private void instrumentMethod(MethodDeclaration method, FieldDeclaration field) {
         System.out.println("Instrumenting method: " + method.getNameAsString());
-        List<Class> modifyingMethods = getModifyingMethods(field.getVariable(0));
-        List<Expression> expressions = new ArrayList<>();
-        // for each method - find all modifying statements
-        // injection - analyze
-        modifyingMethods.forEach(modifyingMethod -> expressions.addAll(method.findAll(modifyingMethod)));
-        expressions.forEach(this::injectAnalyzer);
-        // for each field assignment
-        // injection - set the instance
-        method.findAll(AssignExpr.class).forEach(this::injectSetInstance);
+        // find field modifying statements
+        List<String> modifyingMethods = getModifyingMethods(field.getVariable(0));
+        List<MethodCallExpr> methodCalls = method.findAll(MethodCallExpr.class);
+        methodCalls.removeIf(m -> !modifyingMethods.contains(m.getNameAsString()));
+        methodCalls.forEach(this::injectAnalyzer);
+        // find field assignment statements
+        List<AssignExpr> assignments = method.findAll(AssignExpr.class);
+        assignments.removeIf(a -> !a.getTarget().asNameExpr().getNameAsString().equals(fieldName));
+        assignments.forEach(this::injectSetInstance);
     }
 
     private void injectAnalyzer(Expression expression) {
@@ -91,12 +87,20 @@ public class Instrumentor {
     /**
      * Supports Lists and Map for now.
      * */
-    private List<Class> getModifyingMethods(VariableDeclarator variable) {
-        // look at the type
-        // if it is List -> return [add, remove, ...]
-        // if Map return [...]
-        // TODO: Tarek
-        return Arrays.stream(new Class[] { MethodCallExpr.class }).toList();
+    private List<String> getModifyingMethods(VariableDeclarator variable) {
+        String type = variable.getTypeAsString();
+        if (type.matches("List<.*>")) {
+            System.out.println("Returning List modifying methods");
+            return Arrays.asList("add", "addAll", "remove", "removeAll", "removeIf",
+                                 "retainAll", "replaceAll", "set", "clear", "sort");
+        } else if (type.matches("Map<.*>")) {
+            System.out.println("Returning Map modifying methods");
+            return Arrays.asList("put", "putAll", "replace", "replaceAll", "clear",
+                                 "remove", "compute", "computeIfAbsent", "computeIfPresent",
+                                 "putIfAbsent", "merge");
+        } else {
+            throw new UnsupportedFieldType();
+        }
     }
 
     /**
