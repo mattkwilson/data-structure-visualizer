@@ -1,12 +1,25 @@
 import './Visual.css';
+import ArrayList from './ArrayList';
+import {useState} from "react";
 
 const Visual = (props) => {
+    const [data, setData] = useState([]);
+    
+    function DisplayVisual() {
+        if (props.structType === "ArrayList") {
+            setData(props.contents);
+            return <ArrayList contents={data}/>
+        }
+    }
+    
     return (
         <div className="App">
-            <h1>Visuals?</h1>
-            <h2>{props.contents}</h2>
+            <h1>{props.name}</h1>
+            <DisplayVisual />
+            
         </div>
     );
 }
 
 export default Visual;
+

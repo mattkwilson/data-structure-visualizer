@@ -1,6 +1,7 @@
 import './Root.css';
-import Info from './components/Info/Info'
-import Visual from './components/Visual/Visual'
+import Info from './components/Info/Info';
+import Visual from './components/Visual/Visual';
+import data from './json/sample.json';
 import {useState} from "react";
 
 function Root() {
@@ -13,8 +14,14 @@ function Root() {
     const [contents, setContents] = useState();
 
     function readJson() {
-        const sample = JSON.parse('{"array": [{"fileName": "src/test.java","line": 26,"name": "arr","structType": "ArrayList","contents": [13,26,32,2]},{"fileName": "src/test2.java","line": 29,"name": "areeer","structType": "ArrayList","contents": [1,2,3,4]}, {"fileName": "src/test2.java","line": 32,"name": "areeer","structType": "ArrayList","contents": [1,5,7,4]}]}');
-        for (const step of sample.array) {
+        // var request = new XMLHttpRequest();
+        // request.open("GET", "./json/sample.json", false);
+        // request.send(null)
+        // var sample = JSON.parse(request.responseText);
+        // alert(data.array);
+        // const sample = JSON.parse('{"array": [{"fileName": "src/test.java","line": 26,"name": "arr","structType": "ArrayList","contents": [13,26,32,2]},{"fileName": "src/test2.java","line": 29,"name": "areeer","structType": "ArrayList","contents": [1,2,3,4]}, {"fileName": "src/test2.java","line": 32,"name": "areeer","structType": "ArrayList","contents": [1,5,7,4]}]}');
+        // const sample = JSON.parse(data);
+        for (const step of data.array) {
             array.push({
                 "fileName": step["fileName"],
                 "line": step["line"],
@@ -65,7 +72,7 @@ function Root() {
 
             <div className="right">
                 <div className="centered">
-                    <Visual contents={contents}/>
+                    <Visual name={name} contents={contents} structType={structType}/>
                     <input type='button' value='Previous Step' onClick={onClickPrevious}/>
                     <input type='button' value='Next Step' onClick={onClickNext}/>
                 </div>

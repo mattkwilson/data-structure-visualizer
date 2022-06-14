@@ -1,3 +1,21 @@
 .App {
     text-align: center;
 }
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+}
+
+td-red {
+    border: 1px solid #ff0000;
+    text-align: left;
+    padding: 8px;
+}
