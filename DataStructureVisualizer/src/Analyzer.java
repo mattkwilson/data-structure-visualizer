@@ -3,6 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,10 +14,18 @@ public class Analyzer {
     private final String name;
     private final int instanceNumber;
 
+    private Map<Object, JSONArray> instanceMap;
+
     public Analyzer(String name, int instanceNumber) {
         this.states = new JSONArray();
         this.name = name;
         this.instanceNumber = instanceNumber;
+    }
+
+    public void setInstance(Object instance) {
+        // instanceMap.put(instance, new JSONArray());
+        // add instance to map
+        // TODO: implement
     }
 
     public void analyze(Object object) {
@@ -25,6 +34,7 @@ public class Analyzer {
         int lineNumber = stack.getLineNumber();
         String contents = object.toString();
         String structType = object.getClass().toString();
+
         addState(fileName, lineNumber, structType, contents);
     }
 
