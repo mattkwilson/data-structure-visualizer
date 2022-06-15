@@ -1,9 +1,9 @@
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
@@ -13,7 +13,10 @@ import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
 import exceptions.UnsupportedFieldType;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 // Add the analyzer class to the project under analysis
 
@@ -37,30 +40,35 @@ public class Instrumentor {
     }
 
     private void instrumentProject(List<ClassOrInterfaceDeclaration> classes, FieldDeclaration field) {
+        List<VariableDeclarator> declarators = field.findAll(VariableDeclarator.class);
+        declarators.forEach(this::injectInitializerExpression);
         classes.forEach(classDec -> instrumentClass(classDec, field));
     }
 
     private void instrumentClass(ClassOrInterfaceDeclaration classDec, FieldDeclaration field) {
         System.out.println("Instrumenting class: " + classDec.getNameAsString());
-        List<MethodDeclaration> methods = classDec.findAll(MethodDeclaration.class);
-        // TODO: find ObjectCreationExpr so we can inject setInstance first line in constructor.
-        methods.forEach(method -> instrumentMethod(method, field));
+        List<CallableDeclaration> methods = classDec.findAll(CallableDeclaration.class);
+        boolean isClassUnderAnalysis = classDec.getNameAsString().equals(className);
+        methods.forEach(method -> instrumentMethod(method, field, isClassUnderAnalysis));
     }
 
-    private void instrumentMethod(MethodDeclaration method, FieldDeclaration field) {
-        System.out.println("Instrumenting method: " + method.getNameAsString());
+    private void instrumentMethod(CallableDeclaration method, FieldDeclaration field, boolean isClassUnderAnalysis) {
+        System.out.println("\tInstrumenting method: " + method.getNameAsString());
         // find field modifying statements
         List<String> modifyingMethods = getModifyingMethods(field.getVariable(0));
         List<MethodCallExpr> methodCalls = method.findAll(MethodCallExpr.class);
         methodCalls.removeIf(m -> !modifyingMethods.contains(m.getNameAsString()));
         methodCalls.forEach(this::injectAnalyzer);
         // find field assignment statements
+        if (isClassUnderAnalysis) {
         List<AssignExpr> assignments = method.findAll(AssignExpr.class);
-        assignments.removeIf(a -> !a.getTarget().asNameExpr().getNameAsString().equals(fieldName));
-        assignments.forEach(this::injectSetInstance);
+        assignments.removeIf(a -> !a.getTarget().toString().matches("(this.)?" + fieldName));
+        assignments.forEach(this::injectAssignExpression);
+        } // else { this is more complicated because we have to check the type of the scope accessing the field } TODO TBD later
     }
 
     private void injectAnalyzer(Expression expression) {
+        System.out.print("\t\tInjecting '" + expression + "'" + " <- ");
         // assuming an expression has to be within a block statement
         BlockStmt blockStmt = findParentBlockStmt(expression);
         // get the Expression statement
@@ -71,6 +79,7 @@ public class Instrumentor {
         Statement analyzeStmt = createAnalyzeStatement(expression);
         // insert the new analyze statement to the block immediately after the expression
         blockStmt.addStatement(indexOfExpression + 1, analyzeStmt);
+        System.out.println("'" + analyzeStmt + "'");
     }
 
     private Statement createAnalyzeStatement(Expression expression) {
@@ -107,8 +116,31 @@ public class Instrumentor {
         return block.getStatements().indexOf(statement);
     }
 
-    private void injectSetInstance(Expression expression) {
-        // TODO: implement Tarik
+    private void injectInitializerExpression(VariableDeclarator declarator) {
+        if (declarator.getInitializer().isEmpty()) {
+            return;
+        }
+        System.out.print("\t\tChanging '" + declarator + "' to ");
+        MethodCallExpr assign = createAnalyzeAssignExpression();
+        assign.addArgument("null");
+        assign.addArgument(declarator.getInitializer().get());
+        declarator.setInitializer(assign);
+        System.out.println("'" + declarator + "'");
+    }
+
+    private void injectAssignExpression(AssignExpr expression) {
+        System.out.print("\t\tChanging '" + expression + "' to ");
+        MethodCallExpr assign = createAnalyzeAssignExpression();
+        assign.addArgument(expression.getTarget());
+        assign.addArgument(expression.getValue());
+        expression.setValue(assign);
+        System.out.println("'" + expression + "'");
+    }
+
+    private MethodCallExpr createAnalyzeAssignExpression() {
+        MethodCallExpr assign = new MethodCallExpr("assign");
+        assign.setScope(new NameExpr("Analyzer"));
+        return assign;
     }
 
     private void addImportStatements() {
@@ -117,10 +149,6 @@ public class Instrumentor {
 
     private void addCompilationUnitAnalyzer() {
         // TODO: implement Matt
-    }
-
-    private void createSetInstanceStatement() {
-        // TODO: implement Tarik
     }
 
     private void injectWriteJson() {
@@ -133,11 +161,9 @@ public class Instrumentor {
     private List<String> getModifyingMethods(VariableDeclarator variable) {
         String type = variable.getTypeAsString();
         if (type.matches("List<.*>")) {
-            System.out.println("Returning List modifying methods");
             return Arrays.asList("add", "addAll", "remove", "removeAll", "removeIf",
                                  "retainAll", "replaceAll", "set", "clear", "sort");
         } else if (type.matches("Map<.*>")) {
-            System.out.println("Returning Map modifying methods");
             return Arrays.asList("put", "putAll", "replace", "replaceAll", "clear",
                                  "remove", "compute", "computeIfAbsent", "computeIfPresent",
                                  "putIfAbsent", "merge");
