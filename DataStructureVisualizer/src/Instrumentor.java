@@ -1,15 +1,14 @@
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.expr.*;
-import com.github.javaparser.ast.nodeTypes.NodeWithOptionalScope;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.Statement;
-import com.github.javaparser.utils.SourceRoot;
 import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
 import exceptions.UnsupportedFieldType;
@@ -18,7 +17,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 // Add the analyzer class to the project under analysis
 
@@ -48,6 +50,7 @@ public class Instrumentor {
     }
 
     private void instrumentProject(List<ClassOrInterfaceDeclaration> classes, FieldDeclaration field) {
+        compilationUnits.forEach(this::addImportStatements);
         List<VariableDeclarator> declarators = field.findAll(VariableDeclarator.class);
         declarators.forEach(this::injectInitializerExpression);
         classes.forEach(classDec -> instrumentClass(classDec, field));
@@ -215,8 +218,9 @@ public class Instrumentor {
         return assign;
     }
 
-    private void addImportStatements() {
-        // TODO: implement Tarik
+    private void addImportStatements(CompilationUnit c) {
+        ImportDeclaration analyzerImport = new ImportDeclaration("analysis.Analyzer", false, false);
+        c.addImport(analyzerImport);
     }
 
     /**
