@@ -14,7 +14,8 @@ function Root() {
     const [structType, setStructType] = useState();
     const [contents, setContents] = useState();
     const [redPositions, setRedPositions] = useState([]);
-    const [currentData, setCurrentData] = useState(-1);
+    const [bluePosition, setBluePosition] = useState(-1);
+    const [currentData, setCurrentData] = useState(0);
 
 
     function readJson() {
@@ -52,7 +53,7 @@ function Root() {
         }
 
     }
-    
+
     function onClickData(index) {
         if (index !== currentData) {
             setCurrentData(index)
@@ -67,12 +68,14 @@ function Root() {
         setLine(array[currentData][step].line)
         setName(array[currentData][step].name)
         setStructType(array[currentData][step].structType)
-        redPositionHelper(step)
+        let bluePosition = bluePositionHelper()
+        setBluePosition(bluePosition)
+        redPositionHelper(bluePosition)
         setContents(array[currentData][step].contents)
     }
 
-    function redPositionHelper(newContent) {
-        if(structType === "ArrayList" && step !== 0) {
+    function redPositionHelper(bluePosition) {
+        if (structType === "ArrayList" && step !== 0 && bluePosition === -1) {
             const newStepContents = array[currentData][step].contents;
             const previousStepContents = array[currentData][step - 1].contents
             const redPositions = [];
@@ -85,6 +88,21 @@ function Root() {
         } else {
             setRedPositions([])
         }
+    }
+
+    function bluePositionHelper() {
+        if (structType === "ArrayList" && step !== 0) {
+            const newStepContents = array[currentData][step].contents;
+            const previousStepContents = array[currentData][step - 1].contents
+            if (newStepContents.length < previousStepContents.length) {
+                for (let i = 0; i < newStepContents.length; i++) {
+                    if (previousStepContents[i] !== newStepContents[i]) {
+                        return i;
+                    }
+                }
+            }
+        }
+        return -1;
     }
 
     readJson()
@@ -100,7 +118,8 @@ function Root() {
 
             <div className="right">
                 <div className="centered">
-                    <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}/>
+                    <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}
+                            bluePosition={bluePosition}/>
                     <input type='button' value='Previous Step' onClick={onClickPrevious}/>
                     <input type='button' value='Next Step' onClick={onClickNext}/>
                     <div className="data-buttons">
