@@ -54,7 +54,7 @@ function Root() {
     }
 
     function onClickData(index) {
-        if (index !== currentData) {
+        if (index !== currentData || step === -1) {
             setCurrentData(currentData = index)
             setStep(step = 0)
             setStepData()
