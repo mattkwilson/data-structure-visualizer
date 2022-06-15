@@ -1,10 +1,7 @@
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.CallableDeclaration;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.FieldDeclaration;
-import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.nodeTypes.NodeWithOptionalScope;
 import com.github.javaparser.ast.stmt.BlockStmt;
@@ -36,6 +33,8 @@ public class Instrumentor {
     private List<CompilationUnit> compilationUnits;
     private String className;
     private String fieldName;
+
+    private MethodDeclaration mainMethod;
 
     public Instrumentor(String className, String fieldName, List<CompilationUnit> cus) {
         compilationUnits = cus;
@@ -69,6 +68,49 @@ public class Instrumentor {
         assignments.removeIf(a -> !a.getTarget().toString().matches("(this.)?" + fieldName));
         assignments.forEach(this::injectAssignExpression);
         } // else { this is more complicated because we have to check the type of the scope accessing the field } TODO TBD later
+
+        if(isMainMethod(method)) {
+            if(mainMethod != null) {
+                throw new RuntimeException("Multiple main methods in project is not allowed");
+            }
+            mainMethod = (MethodDeclaration) method;
+            injectWriteJson(mainMethod);
+        }
+    }
+
+    private boolean isMainMethod(CallableDeclaration callableDeclaration) {
+        if(callableDeclaration instanceof MethodDeclaration) {
+            MethodDeclaration methodDec = (MethodDeclaration) callableDeclaration;
+            try {
+                return methodDec.getNameAsString().equals("main") &&
+                        methodDec.getTypeAsString().equals("void") &&
+                        methodDec.getModifiers().size() == 2 &&
+                        methodDec.getModifiers().get(0).getKeyword().toString().equals("PUBLIC") &&
+                        methodDec.getModifiers().get(1).getKeyword().toString().equals("STATIC") &&
+                        methodDec.getParameters().size() == 1 &&
+                        methodDec.getParameters().get(0).getNameAsString().equals("args") &&
+                        methodDec.getParameters().get(0).getTypeAsString().equals("String[]");
+            } catch (RuntimeException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private void injectWriteJson(MethodDeclaration mainMethod) {
+        if(mainMethod.getBody().isPresent()) {
+            Statement writeJSONStatment = createWriteJsonStatement();
+            BlockStmt body = mainMethod.getBody().get();
+            body.addStatement(writeJSONStatment);
+        } else {
+            throw new RuntimeException("Error injecting WriteJson call");
+        }
+    }
+
+    private Statement createWriteJsonStatement() {
+        Expression scope = new NameExpr(new SimpleName("Analyzer"));
+        Expression writeJSONExpression = new MethodCallExpr(scope, new SimpleName("writeJSON"));
+        return new ExpressionStmt(writeJSONExpression);
     }
 
     private void injectAnalyzer(MethodCallExpr expression) {
@@ -155,10 +197,6 @@ public class Instrumentor {
     }
 
     private void addCompilationUnitAnalyzer() {
-        // TODO: implement Matt
-    }
-
-    private void injectWriteJson() {
         // TODO: implement Matt
     }
 
