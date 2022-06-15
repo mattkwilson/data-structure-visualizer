@@ -96,10 +96,9 @@ function Root() {
                 for (let i = 0; i < newStepContents.length; i++) {
                     if (previousStepContents[i] !== newStepContents[i]) {
                         return i;
-                    } else {
-                        return newStepContents.length;
                     }
                 }
+                return newStepContents.length;
             }
         }
         return -1;
