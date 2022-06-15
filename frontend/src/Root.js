@@ -15,8 +15,7 @@ function Root() {
     const [contents, setContents] = useState();
     const [redPositions, setRedPositions] = useState([]);
     const [bluePosition, setBluePosition] = useState(-1);
-    const [currentData, setCurrentData] = useState(0);
-
+    let [currentData, setCurrentData] = useState(0);
 
     function readJson() {
         // const sample = JSON.parse('{"array": [{"fileName": "src/test.java","line": 26,"name": "arr","structType": "ArrayList","contents": [13,26,32,2]},{"fileName": "src/test2.java","line": 29,"name": "areeer","structType": "ArrayList","contents": [1,2,3,4]}, {"fileName": "src/test2.java","line": 32,"name": "areeer","structType": "ArrayList","contents": [1,5,7,4]}]}');
@@ -24,13 +23,13 @@ function Root() {
         const samples = [data, data2]
         for (const json of samples) {
             const temp = [];
-            for (const step of json.array) {
+            for (const currStep of json.array) {
                 temp.push({
-                    "fileName": step["fileName"],
-                    "line": step["line"],
-                    "name": step["name"],
-                    "structType": step["structType"],
-                    "contents": step["contents"]
+                    "fileName": currStep["fileName"],
+                    "line": currStep["line"],
+                    "name": currStep["name"],
+                    "structType": currStep["structType"],
+                    "contents": currStep["contents"]
                 })
             }
             array.push(temp);
@@ -56,9 +55,8 @@ function Root() {
 
     function onClickData(index) {
         if (index !== currentData) {
-            setCurrentData(index)
-            setStep(0);
-            console.log(step)
+            setCurrentData(currentData = index)
+            setStep(step = 0)
             setStepData()
         }
     };
@@ -98,6 +96,8 @@ function Root() {
                 for (let i = 0; i < newStepContents.length; i++) {
                     if (previousStepContents[i] !== newStepContents[i]) {
                         return i;
+                    } else {
+                        return newStepContents.length;
                     }
                 }
             }

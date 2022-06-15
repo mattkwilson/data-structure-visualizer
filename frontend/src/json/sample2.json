@@ -6,6 +6,13 @@
             "name": "areeer",
             "structType": "ArrayList",
             "contents": [4,3,2,1]
+        },
+        {
+            "fileName": "src/test2.java",
+            "line": 29,
+            "name": "areeer",
+            "structType": "ArrayList",
+            "contents": [4,3,2]
         }
     ]
 }

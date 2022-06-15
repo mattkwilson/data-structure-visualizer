@@ -33,3 +33,8 @@ td {
     border: 2.5px solid #000000;
     border-left: 2.6px solid #0000ff;
 }
+
+.td-blue-right {
+    border: 2.5px solid #000000;
+    border-right: 2.6px solid #0000ff;
+}
