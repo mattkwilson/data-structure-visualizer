@@ -3,7 +3,7 @@ import Info from './components/Info/Info';
 import Visual from './components/Visual/Visual';
 import data from './json/sample.json';
 import data2 from './json/sample2.json';
-import {useState} from "react";
+import { useState } from "react";
 
 function Root() {
     const array = [];
@@ -15,6 +15,7 @@ function Root() {
     const [contents, setContents] = useState();
     const [redPositions, setRedPositions] = useState([]);
     const [currentData, setCurrentData] = useState(0);
+
 
     function readJson() {
         // const sample = JSON.parse('{"array": [{"fileName": "src/test.java","line": 26,"name": "arr","structType": "ArrayList","contents": [13,26,32,2]},{"fileName": "src/test2.java","line": 29,"name": "areeer","structType": "ArrayList","contents": [1,2,3,4]}, {"fileName": "src/test2.java","line": 32,"name": "areeer","structType": "ArrayList","contents": [1,5,7,4]}]}');
@@ -53,10 +54,13 @@ function Root() {
     }
     
     function onClickData(index) {
-        setCurrentData(index)
-        setStep(1)
-        setStepData()
-    }
+        if (index !== currentData) {
+            setCurrentData(index)
+            setStep(0);
+            console.log(step)
+            setStepData()
+        }
+    };
 
     function setStepData() {
         setFileName(array[currentData][step].fileName)
@@ -102,7 +106,7 @@ function Root() {
                     <div className="data-buttons">
                         {array.map((dataStruct, index) => {
                             return (
-                                <input type='button' value={dataStruct[0].name} onClick={() => onClickData(index)}/>
+                                <input key={index} type='button' value={dataStruct[0].name} onClick={() => onClickData(index)}/>
                             )
                         })}
                     </div>
