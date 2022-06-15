@@ -1,3 +1,5 @@
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
@@ -7,17 +9,16 @@ import com.github.javaparser.ast.nodeTypes.NodeWithOptionalScope;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.Statement;
+import com.github.javaparser.utils.SourceRoot;
 import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
 import exceptions.UnsupportedFieldType;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 // Add the analyzer class to the project under analysis
 
@@ -30,9 +31,12 @@ import java.util.Optional;
 // local variables:
 
 public class Instrumentor {
+
+    private final String ANALYZER_PATH = "src/Analyzer.java";
     private List<CompilationUnit> compilationUnits;
     private String className;
     private String fieldName;
+    private JavaParser parser;
 
     private MethodDeclaration mainMethod;
 
@@ -40,12 +44,29 @@ public class Instrumentor {
         compilationUnits = cus;
         this.className = className;
         this.fieldName = fieldName;
+        parser = new JavaParser();
     }
 
     private void instrumentProject(List<ClassOrInterfaceDeclaration> classes, FieldDeclaration field) {
         List<VariableDeclarator> declarators = field.findAll(VariableDeclarator.class);
         declarators.forEach(this::injectInitializerExpression);
         classes.forEach(classDec -> instrumentClass(classDec, field));
+        addCompilationUnitAnalyzer();
+    }
+
+    private void addCompilationUnitAnalyzer() {
+        File analyzerJavaFile = new File(ANALYZER_PATH);
+
+        try {
+            ParseResult<CompilationUnit> parseResult = parser.parse(analyzerJavaFile);
+            if(parseResult.isSuccessful() && parseResult.getResult().isPresent()) {
+                CompilationUnit analyzerCU = parseResult.getResult().get();
+                compilationUnits.add(analyzerCU);
+            }
+        } catch (FileNotFoundException ignored) {
+
+        }
+        throw new RuntimeException("Error adding compilation unit for the Analyzer.java file");
     }
 
     private void instrumentClass(ClassOrInterfaceDeclaration classDec, FieldDeclaration field) {
@@ -194,10 +215,6 @@ public class Instrumentor {
 
     private void addImportStatements() {
         // TODO: implement Tarik
-    }
-
-    private void addCompilationUnitAnalyzer() {
-        // TODO: implement Matt
     }
 
     /**
