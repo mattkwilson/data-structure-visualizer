@@ -62,11 +62,12 @@ public class Instrumentor {
             if(parseResult.isSuccessful() && parseResult.getResult().isPresent()) {
                 CompilationUnit analyzerCU = parseResult.getResult().get();
                 compilationUnits.add(analyzerCU);
+            } else {
+                throw new RuntimeException("Error adding compilation unit for the Analyzer.java file");
             }
-        } catch (FileNotFoundException ignored) {
-
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        throw new RuntimeException("Error adding compilation unit for the Analyzer.java file");
     }
 
     private void instrumentClass(ClassOrInterfaceDeclaration classDec, FieldDeclaration field) {
