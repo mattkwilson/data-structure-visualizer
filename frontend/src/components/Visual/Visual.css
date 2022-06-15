@@ -12,6 +12,12 @@ th {
     padding: 8px;
 }
 
+td {
+    text-align: center;
+    min-width: 1vw;
+    padding: 8px;
+}
+
 .td {
     border: 2.5px solid #000000;
     text-align: center;
@@ -21,7 +27,9 @@ th {
 
 .td-red {
     border: 2.6px solid #ff0000;
-    text-align: center;
-    min-width: 1vw;
-    padding: 8px;
+}
+
+.td-blue {
+    border: 2.5px solid #000000;
+    border-left: 2.6px solid #0000ff;
 }

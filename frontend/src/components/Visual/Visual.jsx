@@ -8,7 +8,7 @@ const Visual = (props) => {
     function DisplayVisual() {
         if (props.structType === "ArrayList") {
             setData(props.contents);
-            return <ArrayList contents={data} redPositions={props.redPositions}/>
+            return <ArrayList contents={data} redPositions={props.redPositions} bluePosition={props.bluePosition}/>
         }
     }
     
