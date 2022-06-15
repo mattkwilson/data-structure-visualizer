@@ -9,7 +9,7 @@ import org.json.JSONObject;
 @SuppressWarnings("unused")
 public class Analyzer {
 
-    private class Structure {
+    private static class Structure {
         public String name;
         public JSONArray states;
         public final int instanceNumber;
@@ -22,23 +22,21 @@ public class Analyzer {
     }
 
     private static int nextInstanceNumber = 0;
-    private final Map<Integer, Structure> instanceMap;
+    private static final Map<Integer, Structure> instanceMap = new HashMap<>();
 
-    public Analyzer() {
-        instanceMap = new HashMap<>();
+    public static <T> T assign(T o, T n, String name) {
+        if (o == null) {
+            instanceMap.put(System.identityHashCode(n), new Structure(name, nextInstanceNumber));
+            nextInstanceNumber++;
+        } else  {
+            Structure temp = instanceMap.get(System.identityHashCode(o));
+            instanceMap.remove(System.identityHashCode(o));
+            instanceMap.put(System.identityHashCode(n), temp);
+        }
+        return n;
     }
 
-    public void createInstance(Object instance, String name) {
-        instanceMap.put(System.identityHashCode(instance), new Structure(name, nextInstanceNumber));
-        System.out.println(System.identityHashCode(instance));
-        nextInstanceNumber++;
-    }
-
-    public void setInstance(Object instance, String name) {
-
-    }
-
-    public void analyze(Object object) throws RuntimeException {
+    public static void analyze(Object object) throws RuntimeException {
         StackTraceElement stack = new Throwable().getStackTrace()[1];
         // Check if the object is one of the ones getting tracked
         if (!instanceMap.containsKey(System.identityHashCode(object))) {
@@ -64,7 +62,7 @@ public class Analyzer {
         structure.states.put(state);
     }
 
-    public void writeJSON() {
+    public static void writeJSON() {
         try {
             for (Structure struct: instanceMap.values()) {
                 FileWriter writer = new FileWriter(struct.name + "_" + struct.instanceNumber + ".json");
