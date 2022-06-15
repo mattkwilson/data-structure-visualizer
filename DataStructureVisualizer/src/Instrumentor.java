@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.*;
+import com.github.javaparser.ast.nodeTypes.NodeWithOptionalScope;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.Statement;
@@ -70,7 +71,7 @@ public class Instrumentor {
         } // else { this is more complicated because we have to check the type of the scope accessing the field } TODO TBD later
     }
 
-    private void injectAnalyzer(Expression expression) {
+    private void injectAnalyzer(MethodCallExpr expression) {
         System.out.print("\t\tInjecting '" + expression + "'" + " <- ");
         // assuming an expression has to be within a block statement
         BlockStmt blockStmt = findParentBlockStmt(expression);
@@ -85,7 +86,7 @@ public class Instrumentor {
         System.out.println("'" + analyzeStmt + "'");
     }
 
-    private Statement createAnalyzeStatement(Expression expression) {
+    private Statement createAnalyzeStatement(MethodCallExpr expression) {
         Expression scope = new NameExpr(new SimpleName("Analyzer"));
         NodeList<Expression> args = new NodeList<>();
         args.add(getObjectForAnalyzer(expression));
@@ -93,8 +94,11 @@ public class Instrumentor {
         return new ExpressionStmt(analyzeExpression);
     }
 
-    private Expression getObjectForAnalyzer(Expression expression) {
-        return new NameExpr(fieldName);
+    private Expression getObjectForAnalyzer(MethodCallExpr expression) {
+        if(expression.getScope().isPresent()) {
+            return expression.getScope().get();
+        }
+        throw new RuntimeException("Expression is missing scope: " + expression);
     }
 
     private BlockStmt findParentBlockStmt(Expression expression) {
