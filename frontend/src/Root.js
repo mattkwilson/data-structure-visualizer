@@ -3,7 +3,10 @@ import Info from './components/Info/Info';
 import Visual from './components/Visual/Visual';
 import data from './json/sample.json';
 import data2 from './json/sample2.json';
-import { useState } from "react";
+import {useState} from "react";
+
+const path = require('path');
+const fs = require('fs');
 
 function Root() {
     const array = [];
@@ -36,6 +39,39 @@ function Root() {
         }
     }
 
+    function b() {
+        try {
+            const url = path.resolve(__dirname, `./frontend/src/json/1.json`);
+            alert('f')
+            alert(url)
+            const data = require(url);
+        } catch (err) {
+            alert(err)
+            // Here you get the error when the file was not found,
+            // but you also get any other error
+        }
+
+        // samples.push(b)
+
+
+    }
+
+    function c() {
+
+        try {
+            const file = fs.readFileSync(`./frontend/src/json/1.json`, 'utf-8').toString();
+            const data = JSON.parse(file);
+        } catch (err) {
+            alert(err)
+            // Here you get the error when the file was not found,
+            // but you also get any other error
+        }
+        alert('a')
+
+    }
+    // c()
+     b()
+    readJson()
 
     function onClickPrevious() {
         if (step > 0) {
@@ -105,7 +141,7 @@ function Root() {
         return -1;
     }
 
-    readJson()
+    // readJson()
     return (
         <div>
             <div className="left">
@@ -125,7 +161,8 @@ function Root() {
                     <div className="data-buttons">
                         {array.map((dataStruct, index) => {
                             return (
-                                <input key={index} type='button' value={dataStruct[0].name} onClick={() => onClickData(index)}/>
+                                <input key={index} type='button' value={dataStruct[0].name}
+                                       onClick={() => onClickData(index)}/>
                             )
                         })}
                     </div>
