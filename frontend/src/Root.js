@@ -2,6 +2,7 @@ import './Root.css';
 import Info from './components/Info/Info';
 import Visual from './components/Visual/Visual';
 import data from './json/sample.json';
+import data2 from './json/sample2.json';
 import {useState} from "react";
 
 function Root() {
@@ -13,23 +14,24 @@ function Root() {
     const [structType, setStructType] = useState();
     const [contents, setContents] = useState();
     const [redPositions, setRedPositions] = useState([]);
+    const [currentData, setCurrentData] = useState(0);
 
     function readJson() {
-        // var request = new XMLHttpRequest();
-        // request.open("GET", "./json/sample.json", false);
-        // request.send(null)
-        // var sample = JSON.parse(request.responseText);
-        // alert(data.array);
         // const sample = JSON.parse('{"array": [{"fileName": "src/test.java","line": 26,"name": "arr","structType": "ArrayList","contents": [13,26,32,2]},{"fileName": "src/test2.java","line": 29,"name": "areeer","structType": "ArrayList","contents": [1,2,3,4]}, {"fileName": "src/test2.java","line": 32,"name": "areeer","structType": "ArrayList","contents": [1,5,7,4]}]}');
         // const sample = JSON.parse(data);
-        for (const step of data.array) {
-            array.push({
-                "fileName": step["fileName"],
-                "line": step["line"],
-                "name": step["name"],
-                "structType": step["structType"],
-                "contents": step["contents"]
-            })
+        const samples = [data, data2]
+        for (const json of samples) {
+            const temp = [];
+            for (const step of json.array) {
+                temp.push({
+                    "fileName": step["fileName"],
+                    "line": step["line"],
+                    "name": step["name"],
+                    "structType": step["structType"],
+                    "contents": step["contents"]
+                })
+            }
+            array.push(temp);
         }
     }
 
@@ -43,26 +45,32 @@ function Root() {
     }
 
     function onClickNext() {
-        if (step < (array.length - 1)) {
+        if (step < (array[currentData].length - 1)) {
             setStep(++step)
             setStepData()
         }
 
     }
+    
+    function onClickData(index) {
+        setCurrentData(index)
+        setStep(1)
+        setStepData()
+    }
 
     function setStepData() {
-        setFileName(array[step].fileName)
-        setLine(array[step].line)
-        setName(array[step].name)
-        setStructType(array[step].structType)
+        setFileName(array[currentData][step].fileName)
+        setLine(array[currentData][step].line)
+        setName(array[currentData][step].name)
+        setStructType(array[currentData][step].structType)
         redPositionHelper(step)
-        setContents(array[step].contents)
+        setContents(array[currentData][step].contents)
     }
 
     function redPositionHelper(newContent) {
         if(structType === "ArrayList" && step !== 0) {
-            const newStepContents = array[step].contents;
-            const previousStepContents = array[step - 1].contents
+            const newStepContents = array[currentData][step].contents;
+            const previousStepContents = array[currentData][step - 1].contents
             const redPositions = [];
             for (let i = 0; i < newStepContents.length; i++) {
                 if (previousStepContents[i] !== newStepContents[i]) {
@@ -91,6 +99,13 @@ function Root() {
                     <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}/>
                     <input type='button' value='Previous Step' onClick={onClickPrevious}/>
                     <input type='button' value='Next Step' onClick={onClickNext}/>
+                    <div className="data-buttons">
+                        {array.map((dataStruct, index) => {
+                            return (
+                                <input type='button' value={dataStruct[0].name} onClick={() => onClickData(index)}/>
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
         </div>
