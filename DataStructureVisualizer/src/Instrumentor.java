@@ -13,6 +13,9 @@ import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
 import exceptions.UnsupportedFieldType;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -217,6 +220,23 @@ public class Instrumentor {
      *  Run the instrumented code or save it to disk, so it can be run manually
      * */
     public void runDynamicAnalysis() {
-        // TODO: TBD
+        for (CompilationUnit c : compilationUnits) {
+            String filePath = "instrumented";
+            if (c.getPackageDeclaration().isPresent()) {
+                filePath += "/" + c.getPackageDeclaration().get().getNameAsString().replace('.', '/');
+            }
+            new File(filePath).mkdirs();
+            filePath += "/" + c.getType(0).getNameAsString() + ".java";
+            FileWriter output = null;
+            try {
+                new File(filePath).createNewFile();
+                System.out.println(filePath);
+                output = new FileWriter(filePath);
+                output.write(c.toString());
+                output.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
