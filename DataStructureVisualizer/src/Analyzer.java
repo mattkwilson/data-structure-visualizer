@@ -48,7 +48,7 @@ public class Analyzer {
         String fileName = stack.getFileName();
         int lineNumber = stack.getLineNumber();
         String contents = object.toString();
-        String structType = object.getClass().toString();
+        String structType = object.getClass().getTypeName();
 
         // Create the JSON object called state and assign variables
         JSONObject state = new JSONObject();
