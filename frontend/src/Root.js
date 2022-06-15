@@ -14,7 +14,7 @@ function Root() {
     const [structType, setStructType] = useState();
     const [contents, setContents] = useState();
     const [redPositions, setRedPositions] = useState([]);
-    const [currentData, setCurrentData] = useState(0);
+    const [currentData, setCurrentData] = useState(-1);
 
 
     function readJson() {
