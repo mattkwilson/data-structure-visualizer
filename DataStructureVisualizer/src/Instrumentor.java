@@ -61,6 +61,7 @@ public class Instrumentor {
             ParseResult<CompilationUnit> parseResult = parser.parse(analyzerJavaFile);
             if(parseResult.isSuccessful() && parseResult.getResult().isPresent()) {
                 CompilationUnit analyzerCU = parseResult.getResult().get();
+                analyzerCU.setPackageDeclaration("analysis");
                 compilationUnits.add(analyzerCU);
             } else {
                 throw new RuntimeException("Error adding compilation unit for the Analyzer.java file");
