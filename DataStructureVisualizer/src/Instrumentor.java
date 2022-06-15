@@ -199,6 +199,7 @@ public class Instrumentor {
         MethodCallExpr assign = createAnalyzeAssignExpression();
         assign.addArgument("null");
         assign.addArgument(declarator.getInitializer().get());
+        assign.addArgument(fieldName);
         declarator.setInitializer(assign);
         System.out.println("'" + declarator + "'");
     }
@@ -208,6 +209,7 @@ public class Instrumentor {
         MethodCallExpr assign = createAnalyzeAssignExpression();
         assign.addArgument(expression.getTarget());
         assign.addArgument(expression.getValue());
+        assign.addArgument(fieldName);
         expression.setValue(assign);
         System.out.println("'" + expression + "'");
     }
