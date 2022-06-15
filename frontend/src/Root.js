@@ -6,7 +6,6 @@ import data2 from './json/sample2.json';
 import {useState} from "react";
 
 const path = require('path');
-const fs = require('fs');
 
 function Root() {
     const array = [];
@@ -41,7 +40,7 @@ function Root() {
 
     function b() {
         try {
-            const url = path.resolve(__dirname, `./frontend/src/json/1.json`);
+            const url = path.resolve(__dirname, `./json/1.json`);
             alert('f')
             alert(url)
             const data = require(url);
@@ -56,20 +55,6 @@ function Root() {
 
     }
 
-    function c() {
-
-        try {
-            const file = fs.readFileSync(`./frontend/src/json/1.json`, 'utf-8').toString();
-            const data = JSON.parse(file);
-        } catch (err) {
-            alert(err)
-            // Here you get the error when the file was not found,
-            // but you also get any other error
-        }
-        alert('a')
-
-    }
-    // c()
      b()
     readJson()
 
