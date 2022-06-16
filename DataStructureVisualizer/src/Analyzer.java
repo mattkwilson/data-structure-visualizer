@@ -9,15 +9,23 @@ import org.json.JSONObject;
 @SuppressWarnings("unused")
 public class Analyzer {
 
+    private enum Type {
+        ARRAY,
+        HASHMAP,
+    }
+
     private static class Structure {
         public String name;
         public JSONArray states;
         public final int instanceNumber;
 
-        public Structure(String name, int instanceNumber) {
+        public Type type;
+
+        public Structure(String name, int instanceNumber, Type type) {
             this.name = name;
             this.states = new JSONArray();
             this.instanceNumber = instanceNumber;
+            this.type = type;
         }
     }
 
@@ -25,8 +33,9 @@ public class Analyzer {
     private static final Map<Integer, Structure> instanceMap = new HashMap<>();
 
     public static <T> T assign(T o, T n, String name) {
+        Type type = n.getClass().getTypeName().contains("List") ? Type.ARRAY : Type.HASHMAP;
         if (o == null) {
-            instanceMap.put(System.identityHashCode(n), new Structure(name, nextInstanceNumber));
+            instanceMap.put(System.identityHashCode(n), new Structure(name, nextInstanceNumber, type));
             nextInstanceNumber++;
         } else  {
             Structure temp = instanceMap.get(System.identityHashCode(o));
@@ -48,7 +57,7 @@ public class Analyzer {
         String fileName = stack.getFileName();
         int lineNumber = stack.getLineNumber();
         String contents = object.toString();
-        String structType = object.getClass().getTypeName();
+        String structType = structure.type == Type.ARRAY ? "Array" : "Hashmap";
 
         // Create the JSON object called state and assign variables
         JSONObject state = new JSONObject();
@@ -66,8 +75,9 @@ public class Analyzer {
         JSONObject toWrite = new JSONObject();
         JSONArray arr = new JSONArray();
         for (Structure struct: instanceMap.values()) {
+            String structType = struct.type == Type.ARRAY ? "array" : "map";
             JSONObject temp = new JSONObject();
-            temp.put(struct.name, struct.states);
+            temp.put(structType, struct.states);
             arr.put(temp);
         }
         toWrite.put("jsonFiles", arr);
