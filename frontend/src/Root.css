@@ -23,6 +23,7 @@
 }
 
 .stepButton {
+    font-size: 16px;
     margin-top: 2vh;
     width: 10vw;
     display: inline;
@@ -49,7 +50,7 @@
 }
 
 .dropdown button {
-
+    font-size: 16px;
     background-color: white;
     border: 1px solid #1e3821;
     color: #1e3821;
@@ -79,9 +80,9 @@
     color: #1e3821;
     width: 20vw;
     height: 4vh;
-    font-size: 15px;
     background-color: white;
     border: 1px solid #1e3821;
+    font-size: 16px;
     text-decoration: none;
     text-align: center;
     display: block;
