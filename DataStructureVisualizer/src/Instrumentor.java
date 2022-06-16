@@ -12,6 +12,7 @@ import com.github.javaparser.ast.stmt.Statement;
 import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
 import exceptions.UnsupportedFieldType;
+import org.json.JSONObject;
 
 import javax.tools.JavaCompiler;
 import javax.tools.StandardJavaFileManager;
@@ -20,6 +21,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.*;
 
 // Add the analyzer class to the project under analysis
@@ -39,6 +42,9 @@ public class Instrumentor {
     private String className;
     private String fieldName;
     private JavaParser parser;
+
+    private String mainClass;
+    private String mainPackage;
 
     private MethodDeclaration mainMethod;
 
@@ -101,6 +107,10 @@ public class Instrumentor {
             }
             mainMethod = (MethodDeclaration) method;
             injectWriteJson(mainMethod);
+            ClassOrInterfaceDeclaration mainClassNode = ((ClassOrInterfaceDeclaration) method.getParentNode().get());
+            mainClass = mainClassNode.getNameAsString();
+            CompilationUnit mainCU = (CompilationUnit) mainClassNode.getParentNode().get();
+            mainPackage = (mainCU.getPackageDeclaration().isPresent()) ? mainCU.getPackageDeclaration().get().getNameAsString() : null;
         }
     }
 
@@ -287,6 +297,7 @@ public class Instrumentor {
      *  Run the instrumented code or save it to disk, so it can be run manually
      * */
     public void runDynamicAnalysis() {
+        // write instrumented java files to disk
         List<File> files = new ArrayList<>();
         for (CompilationUnit c : compilationUnits) {
             String filePath = "instrumented";
@@ -308,9 +319,21 @@ public class Instrumentor {
                 e.printStackTrace();
             }
         }
+        // compile instrumented code
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
         JavaCompiler.CompilationTask task = compiler.getTask(null, null, null,null, null, fileManager.getJavaFileObjectsFromFiles(files));
         task.call();
+        // run instrumented code
+        String javaInterpreter = Paths.get(System.getProperty("java.home"), "bin", "java").toString();
+        String classpath = Paths.get(System.getProperty("user.dir"), "instrumented") + ";";
+        try {
+            classpath += new File(JSONObject.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
+            // TODO TBD project specific dependencies should be added here
+            String mainProgram = (mainPackage != null) ? mainPackage + "." + mainClass : mainClass;
+            new ProcessBuilder().inheritIO().command(javaInterpreter, "-classpath", classpath, mainProgram).start();
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 }
