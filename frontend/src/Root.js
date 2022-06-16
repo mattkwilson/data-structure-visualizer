@@ -116,15 +116,20 @@ function Root() {
                 <div className="centered">
                     <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}
                             bluePosition={bluePosition}/>
-                    <input type='button' value='Previous Step' onClick={onClickPrevious}/>
-                    <input type='button' value='Next Step' onClick={onClickNext}/>
-                    <div className="data-buttons">
-                        {array.map((dataStruct, index) => {
-                            return (
-                                <input key={index} type='button' value={dataStruct[0].name}
-                                       onClick={() => onClickData(index)}/>
-                            )
-                        })}
+                    <input className="stepButton" type='button' value='Previous Step' onClick={onClickPrevious}/>
+                    <input className="stepButton" type='button' value='Next Step' onClick={onClickNext}/>
+                    <div className="dropdown">
+                        <button>Variables</button>
+                        <div className="dropdown-content">
+                            {array.map((dataStruct, index) => {
+                                return (
+                                    <div className={'variable'} key={index}
+                                           onClick={() => onClickData(index)}>
+                                        {dataStruct[0].name}
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

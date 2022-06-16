@@ -3,6 +3,8 @@
 }
 
 table {
+    margin-left: auto;
+    margin-right: auto;
     font-family: arial, sans-serif;
     border-collapse: collapse;
 }
