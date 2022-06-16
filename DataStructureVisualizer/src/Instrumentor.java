@@ -147,7 +147,7 @@ public class Instrumentor {
     private Statement createWriteJsonStatement() {
         Expression scope = new NameExpr(new SimpleName("Analyzer"));
         MethodCallExpr writeJSONExpression = new MethodCallExpr(scope, new SimpleName("writeJSON"));
-        String frontendJsonPath = Paths.get(System.getProperty("user.dir")).getParent().resolve("frontend/json").toString().replace('\\', '/').concat("/");
+        String frontendJsonPath = Paths.get(System.getProperty("user.dir")).getParent().resolve("frontend/src/json").toString().replace('\\', '/').concat("/");
         writeJSONExpression.addArgument(new StringLiteralExpr(frontendJsonPath));
         return new ExpressionStmt(writeJSONExpression);
     }
