@@ -1,10 +1,11 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 @SuppressWarnings("unused")
 public class Analyzer {
@@ -62,7 +63,7 @@ public class Analyzer {
         structure.states.put(state);
     }
 
-    public static void writeJSON() {
+    public static void writeJSON(String frontendJsonPath) {
         JSONObject toWrite = new JSONObject();
         JSONArray arr = new JSONArray();
         for (Structure struct: instanceMap.values()) {
@@ -72,11 +73,12 @@ public class Analyzer {
         }
         toWrite.put("jsonFiles", arr);
         try {
-            FileWriter writer = new FileWriter("tracked.json");
+            System.out.println("Writing output to " + frontendJsonPath + "tracked.json");
+            new File(frontendJsonPath).mkdirs();
+            FileWriter writer = new FileWriter(frontendJsonPath + "tracked.json");
             writer.write(toWrite.toString());
             writer.flush();
             writer.close();
-            System.out.println("tracked.json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
