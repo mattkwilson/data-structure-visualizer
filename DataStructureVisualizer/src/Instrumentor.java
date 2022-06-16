@@ -38,6 +38,7 @@ import java.util.*;
 public class Instrumentor {
 
     private final String ANALYZER_PATH = "src/Analyzer.java";
+    private final String OUTPUT_PATH = "instrumented";
     private List<CompilationUnit> compilationUnits;
     private String className;
     private String fieldName;
@@ -258,7 +259,7 @@ public class Instrumentor {
      * Determine which case and call the proper function
      * */
     public void instrument() {
-        System.out.println("Stared instrumenting the code...");
+        System.out.println("Started instrumenting the code...");
         // Find the class
         List<ClassOrInterfaceDeclaration> classes = getNodes(compilationUnits, ClassOrInterfaceDeclaration.class);
         ClassOrInterfaceDeclaration classUnderAnalysis = null;
@@ -293,14 +294,29 @@ public class Instrumentor {
     }
 
     /**
+     * https://www.baeldung.com/java-delete-directory
+     * */
+    private static void cleanDir(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                cleanDir(file);
+            }
+        }
+        directoryToBeDeleted.delete();
+    }
+
+    /**
      *  Add the analyzer class to the project under analysis
      *  Run the instrumented code or save it to disk, so it can be run manually
      * */
     public void runDynamicAnalysis() {
         // write instrumented java files to disk
+        System.out.println("Writing instrumented code to disk:");
+        cleanDir(new File(OUTPUT_PATH));
         List<File> files = new ArrayList<>();
         for (CompilationUnit c : compilationUnits) {
-            String filePath = "instrumented";
+            String filePath = OUTPUT_PATH;
             if (c.getPackageDeclaration().isPresent()) {
                 filePath += "/" + c.getPackageDeclaration().get().getNameAsString().replace('.', '/');
             }
@@ -314,19 +330,21 @@ public class Instrumentor {
                 output.write(c.toString());
                 output.close();
                 files.add(file);
-                System.out.println(file);
+                System.out.println("\t" + file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         // compile instrumented code
+        System.out.println("Compiling instrumented code...");
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
         JavaCompiler.CompilationTask task = compiler.getTask(null, null, null,null, null, fileManager.getJavaFileObjectsFromFiles(files));
         task.call();
         // run instrumented code
+        System.out.println("Running instrumented code...");
         String javaInterpreter = Paths.get(System.getProperty("java.home"), "bin", "java").toString();
-        String classpath = Paths.get(System.getProperty("user.dir"), "instrumented") + ";";
+        String classpath = Paths.get(System.getProperty("user.dir"), OUTPUT_PATH) + ";";
         try {
             classpath += new File(JSONObject.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
             // TODO TBD project specific dependencies should be added here
