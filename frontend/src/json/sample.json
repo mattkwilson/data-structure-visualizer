@@ -33,7 +33,7 @@
         {
           "fileName": "src/test.java",
           "line": 26,
-          "name": "arr",
+          "name": "arr2",
           "structType": "ArrayList",
           "contents": [
             13,
@@ -45,13 +45,43 @@
         {
           "fileName": "src/test2.java",
           "line": 32,
-          "name": "arr",
+          "name": "arr2",
           "structType": "ArrayList",
           "contents": [
             13,
             5,
             32,
             4
+          ]
+        }
+      ]
+    },
+    {
+      "array": [
+        {
+          "fileName": "src/test2.java",
+          "line": 29,
+          "name": "arr3",
+          "structType": "ArrayList",
+          "contents": [
+            25,
+            4,
+            32,
+            4,
+            59
+          ]
+        },
+        {
+          "fileName": "src/test2.java",
+          "line": 32,
+          "name": "arr3",
+          "structType": "ArrayList",
+          "contents": [
+            25,
+            5,
+            32,
+            4,
+            39
           ]
         }
       ]
