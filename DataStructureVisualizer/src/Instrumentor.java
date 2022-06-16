@@ -13,14 +13,14 @@ import exceptions.InvalidClassNameException;
 import exceptions.InvalidFieldName;
 import exceptions.UnsupportedFieldType;
 
+import javax.tools.JavaCompiler;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 // Add the analyzer class to the project under analysis
 
@@ -199,7 +199,7 @@ public class Instrumentor {
         MethodCallExpr assign = createAnalyzeAssignExpression();
         assign.addArgument("null");
         assign.addArgument(declarator.getInitializer().get());
-        assign.addArgument(fieldName);
+        assign.addArgument("\"" + fieldName + "\"");
         declarator.setInitializer(assign);
         System.out.println("'" + declarator + "'");
     }
@@ -209,7 +209,7 @@ public class Instrumentor {
         MethodCallExpr assign = createAnalyzeAssignExpression();
         assign.addArgument(expression.getTarget());
         assign.addArgument(expression.getValue());
-        assign.addArgument(fieldName);
+        assign.addArgument("\"" + fieldName + "\"");
         expression.setValue(assign);
         System.out.println("'" + expression + "'");
     }
@@ -287,6 +287,7 @@ public class Instrumentor {
      *  Run the instrumented code or save it to disk, so it can be run manually
      * */
     public void runDynamicAnalysis() {
+        List<File> files = new ArrayList<>();
         for (CompilationUnit c : compilationUnits) {
             String filePath = "instrumented";
             if (c.getPackageDeclaration().isPresent()) {
@@ -296,14 +297,20 @@ public class Instrumentor {
             filePath += "/" + c.getType(0).getNameAsString() + ".java";
             FileWriter output = null;
             try {
-                new File(filePath).createNewFile();
-                System.out.println(filePath);
+                File file = new File(filePath);
+                file.createNewFile();
                 output = new FileWriter(filePath);
                 output.write(c.toString());
                 output.close();
+                files.add(file);
+                System.out.println(file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
+        JavaCompiler.CompilationTask task = compiler.getTask(null, null, null,null, null, fileManager.getJavaFileObjectsFromFiles(files));
+        task.call();
     }
 }
