@@ -2,10 +2,7 @@ import './Root.css';
 import Info from './components/Info/Info';
 import Visual from './components/Visual/Visual';
 import data from './json/sample.json';
-import data2 from './json/sample2.json';
 import {useState} from "react";
-
-const path = require('path');
 
 function Root() {
     const array = [];
@@ -20,10 +17,7 @@ function Root() {
     let [currentData, setCurrentData] = useState(0);
 
     function readJson() {
-        // const sample = JSON.parse('{"array": [{"fileName": "src/test.java","line": 26,"name": "arr","structType": "ArrayList","contents": [13,26,32,2]},{"fileName": "src/test2.java","line": 29,"name": "areeer","structType": "ArrayList","contents": [1,2,3,4]}, {"fileName": "src/test2.java","line": 32,"name": "areeer","structType": "ArrayList","contents": [1,5,7,4]}]}');
-        // const sample = JSON.parse(data);
-        const samples = [data, data2]
-        for (const json of samples) {
+        for (const json of data.jsonFiles) {
             const temp = [];
             for (const currStep of json.array) {
                 temp.push({
@@ -38,24 +32,6 @@ function Root() {
         }
     }
 
-    function b() {
-        try {
-            const url = path.resolve(__dirname, `./json/1.json`);
-            alert('f')
-            alert(url)
-            const data = require(url);
-        } catch (err) {
-            alert(err)
-            // Here you get the error when the file was not found,
-            // but you also get any other error
-        }
-
-        // samples.push(b)
-
-
-    }
-
-     b()
     readJson()
 
     function onClickPrevious() {
