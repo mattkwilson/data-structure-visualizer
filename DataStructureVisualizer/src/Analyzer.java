@@ -63,14 +63,20 @@ public class Analyzer {
     }
 
     public static void writeJSON() {
+        JSONObject toWrite = new JSONObject();
+        JSONArray arr = new JSONArray();
+        for (Structure struct: instanceMap.values()) {
+            JSONObject temp = new JSONObject();
+            temp.put(struct.name, struct.states);
+            arr.put(temp);
+        }
+        toWrite.put("jsonFiles", arr);
         try {
-            for (Structure struct: instanceMap.values()) {
-                FileWriter writer = new FileWriter(struct.name + "_" + struct.instanceNumber + ".json");
-                writer.write(struct.states.toString());
-                writer.flush();
-                writer.close();
-                System.out.println("saved JSON at: " + struct.name + "_" + struct.instanceNumber + ".json");
-            }
+            FileWriter writer = new FileWriter("tracked.json");
+            writer.write(toWrite.toString());
+            writer.flush();
+            writer.close();
+            System.out.println("tracked.json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
