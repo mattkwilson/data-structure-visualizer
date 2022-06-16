@@ -1,6 +1,6 @@
 .left {
     height: 100%;
-    width: 25%;
+    width: 30%;
     position: fixed;
     left: 0;
     background-color: #F0F0F0
@@ -8,7 +8,7 @@
 
 .right {
     height: 100%;
-    width: 75%;
+    width: 70%;
     position: fixed;
     right: 0;
     background-color: #F0F0F0;
@@ -69,7 +69,7 @@
 
 .dropdown-content {
     display: none;
-    margin-left: 8.7vw;
+    margin-left: 7.4vw;
     width: 20vw;
     height: fit-content;
     position: absolute;
