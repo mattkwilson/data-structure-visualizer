@@ -36,7 +36,6 @@ function Root() {
                         array2.push(tokens[1]);
                     }
                     currContents = [array1, array2]
-                    console.log(currContents);
                 } else {
                     currContents = currStep["contents"]
                 }
