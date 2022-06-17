@@ -42,7 +42,7 @@ function Root() {
                 }
                 temp.push({
                     "fileName": currStep["fileName"],
-                    "line": currStep["line"],
+                    "line": currStep["lineNumber"],
                     "name": currStep["name"],
                     "structType": currStep["structType"],
                     "contents": currContents
@@ -90,15 +90,15 @@ function Root() {
     }
 
     function redPositionHelper(bluePosition) {
-        if ((structType === "ArrayList" || structType === "java.util.HashMap") && step !== 0 && bluePosition === -1) {
+        if ((structType === "Array" || structType === "Hashmap") && step !== 0 && bluePosition === -1) {
             var newStepContents;
             var previousStepContents;
-            if (structType === "ArrayList") {
+            if (structType === "Array") {
                 newStepContents = array[currentData][step].contents;
             } else {
                 newStepContents = array[currentData][step].contents[0];
             }
-            if (structType === "ArrayList") {
+            if (structType === "Array") {
                 previousStepContents = array[currentData][step - 1].contents
             } else {
                 previousStepContents = array[currentData][step - 1].contents[0]
@@ -110,7 +110,7 @@ function Root() {
                 }
             }
             setRedPositions(redPositions)
-        } else if (structType === "java.util.HashMap" && step !== 0 && bluePosition === -1){
+        } else if (structType === "Hashmap" && step !== 0 && bluePosition === -1){
             
         } else {
             setRedPositions([])
@@ -118,15 +118,15 @@ function Root() {
     }
 
     function bluePositionHelper() {
-        if ((structType === "ArrayList" || structType === "java.util.HashMap") && step !== 0) {
+        if ((structType === "Array" || structType === "Hashmap") && step !== 0) {
             var newStepContents;
             var previousStepContents;
-            if (structType === "ArrayList") {
+            if (structType === "Array") {
                 newStepContents = array[currentData][step].contents;
             } else {
                 newStepContents = array[currentData][step].contents[0];
             }
-            if (structType === "ArrayList") {
+            if (structType === "Array") {
                 previousStepContents = array[currentData][step - 1].contents
             } else {
                 previousStepContents = array[currentData][step - 1].contents[0]

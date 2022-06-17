@@ -4,14 +4,14 @@
       "array": [
         {
           "fileName": "src/test2.java",
-          "line": 29,
+          "lineNumber": 29,
           "name": "arr",
           "structType": "Array",
           "contents": "[13,26,32,4]"
         },
         {
           "fileName": "src/test2.java",
-          "line": 32,
+          "lineNumber": 32,
           "name": "arr",
           "structType": "Array",
           "contents": "[13,5,32,4]"
@@ -22,21 +22,21 @@
       "array": [
         {
           "fileName": "src/test.java",
-          "line": 26,
+          "lineNumber": 26,
           "name": "arr",
           "structType": "Array",
           "contents": "[13,26,32,2]"
         },
         {
           "fileName": "src/test2.java",
-          "line": 32,
+          "lineNumber": 32,
           "name": "arr",
           "structType": "Array",
           "contents": "[13,26,32,4]"
         },
         {
           "fileName": "src/test2.java",
-          "line": 32,
+          "lineNumber": 32,
           "name": "arr",
           "structType": "Array",
           "contents": "[13,26,32]"
