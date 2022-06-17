@@ -20,12 +20,18 @@ function Root() {
         for (const json of data.jsonFiles) {
             const temp = [];
             for (const currStep of json.array) {
+                var currContents;
+                if (currStep["structType"] === "ArrayList") {
+                    currContents = JSON.parse(currStep["contents"])
+                } else {
+                    currContents = currStep["contents"]
+                }
                 temp.push({
                     "fileName": currStep["fileName"],
                     "line": currStep["line"],
                     "name": currStep["name"],
                     "structType": currStep["structType"],
-                    "contents": currStep["contents"]
+                    "contents": currContents
                 })
             }
             array.push(temp);

@@ -12,8 +12,6 @@ export default function HashMap(props) {
         array1.push(tokens[0]);
         array2.push(tokens[1]);
     }
-    console.log(array1);
-    console.log(array2);
 
     return (
         <div className="HashMap">
