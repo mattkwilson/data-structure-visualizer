@@ -23,16 +23,7 @@ function Root() {
                 var currContents;
                 if (currStep["structType"] === "ArrayList") {
                     // if array is json array object
-                    // currContents = JSON.parse(currStep["contents"])
-                    let arrayString = currStep["contents"];
-                    //get rid of brackets
-                    arrayString = arrayString.substring(1,arrayString.length-1)
-                    const arrayEntries = arrayString.split(",");
-                    const arraylist = [];
-                    for (let i=0; i < arrayEntries.length; i++) {
-                        arraylist.push(arrayEntries[i]);
-                    }
-                    currContents = arraylist;
+                    currContents = JSON.parse(currStep["contents"])
                 } else if (currStep["structType"] === "java.util.HashMap") {
                     // Converts hashmap string into two arrays
                     var params = currStep["contents"].replace(/[{}]/g, "");
