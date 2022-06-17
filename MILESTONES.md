@@ -119,7 +119,9 @@ We will be performing a controlled experiment with a group of four users divided
 ## Scope (changes)
  - Add support for all built in Java List<> and Map<> subtypes 
  - Visualize associated lines of code for each snapshot in frontend
- - Update design of frontend (insert image here)
+ - Update design of frontend
+![image](https://media.github.students.cs.ubc.ca/user/4887/files/837e35a2-b38c-475e-b0b2-16254093cffb)
+
 
 ## Implementation and Evaluation Plan
 
