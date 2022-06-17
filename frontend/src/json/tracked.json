@@ -1,0 +1,79 @@
+{
+  "jsonFiles": [
+    {
+      "array": [
+        {
+          "fileName": "src/test2.java",
+          "line": 29,
+          "name": "arr",
+          "structType": "ArrayList",
+          "contents": "[13,26,32,4]"
+        },
+        {
+          "fileName": "src/test2.java",
+          "line": 32,
+          "name": "arr",
+          "structType": "ArrayList",
+          "contents": "[13,5,32,4]"
+        }
+      ]
+    },
+    {
+      "array": [
+        {
+          "fileName": "src/test.java",
+          "line": 26,
+          "name": "arr",
+          "structType": "ArrayList",
+          "contents": "[13,26,32,2]"
+        },
+        {
+          "fileName": "src/test2.java",
+          "line": 32,
+          "name": "arr",
+          "structType": "ArrayList",
+          "contents": "[13,26,32,4]"
+        },
+        {
+          "fileName": "src/test2.java",
+          "line": 32,
+          "name": "arr",
+          "structType": "ArrayList",
+          "contents": "[13,26,32]"
+        }
+      ]
+    },
+    {
+      "array": [
+        {
+          "fileName":"Example.java",
+          "contents":"{1=12, 2=24}",
+          "structType":"java.util.HashMap",
+          "name":"map",
+          "lineNumber":9
+        },
+        {
+          "fileName":"Example.java",
+          "contents":"{1=12, 2=24, 3=67}",
+          "structType":"java.util.HashMap",
+          "name":"map",
+          "lineNumber":10
+        },
+        {
+          "fileName":"Example.java",
+          "contents":"{2=24, 3=67}",
+          "structType":"java.util.HashMap",
+          "name":"map",
+          "lineNumber":10
+        },
+        {
+          "fileName":"Example.java",
+          "contents":"{2=24}",
+          "structType":"java.util.HashMap",
+          "name":"map",
+          "lineNumber":10
+        }
+      ]
+    }
+  ]
+}

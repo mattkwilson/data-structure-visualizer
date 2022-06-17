@@ -1,6 +1,6 @@
 .left {
     height: 100%;
-    width: 25%;
+    width: 30%;
     position: fixed;
     left: 0;
     background-color: #F0F0F0
@@ -8,7 +8,7 @@
 
 .right {
     height: 100%;
-    width: 75%;
+    width: 70%;
     position: fixed;
     right: 0;
     background-color: #F0F0F0;
@@ -20,4 +20,83 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.stepButton {
+    font-size: 16px;
+    margin-top: 2vh;
+    width: 10vw;
+    display: inline;
+    background-color: white;
+    border: 1px solid #1e3821;
+    color: #1e3821;
+    text-align: center;
+    padding: 15px 30px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.stepButton:hover {
+    align-self: center;
+    background-color: #1e3821;
+    color: white;
+    text-align: center;
+}
+
+
+.dropdown {
+    width: 20vw;
+    display: inline;
+}
+
+.dropdown button {
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid #1e3821;
+    color: #1e3821;
+    text-align: center;
+    width: 20vw;
+    padding: 15px 30px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.dropdown button:hover {
+    align-self: center;
+    background-color: #1e3821;
+    color: white;
+    text-align: center;
+}
+
+.dropdown-content {
+    display: none;
+    margin-left: 7.4vw;
+    width: 20vw;
+    height: fit-content;
+    position: absolute;
+}
+
+.dropdown-content .variable {
+    color: #1e3821;
+    width: 20vw;
+    height: 4vh;
+    background-color: white;
+    border: 1px solid #1e3821;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+}
+
+.dropdown-content .variable:hover {
+    display: block;
+    background-color: #1e3821;
+    width: 20vw;
+    height: 4vh;
+    text-align: center;
+    color: white
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

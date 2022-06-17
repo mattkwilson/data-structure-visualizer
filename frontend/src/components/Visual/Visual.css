@@ -1,3 +1,64 @@
 .App {
     text-align: center;
 }
+
+.HashMap {
+    display: flex;
+    flex-direction: row;
+}
+
+img {
+    background: transparent;
+}
+
+table {
+    display: inline;
+    margin-left: auto;
+    height: fit-content;
+    margin-right: auto;
+    font-family: arial, sans-serif;
+    font-size: 25px;
+    border-collapse: collapse;
+}
+
+th {
+    border: 2.5px solid #000000;
+    padding: 8px;
+}
+
+td {
+    text-align: center;
+    min-width: 2vw;
+    padding: 8px;
+}
+
+.td {
+    border: 2.5px solid #000000;
+    text-align: center;
+    min-width: 2vw;
+    padding: 8px;
+}
+
+.td-red {
+    border: 2.6px solid #ff0000;
+}
+
+.td-blue-left {
+    border: 2.5px solid #000000;
+    border-left: 2.6px solid #0000ff;
+}
+
+.td-blue-top {
+    border: 2.5px solid #000000;
+    border-top: 2.6px solid #0000ff;
+}
+
+.td-blue-bottom {
+    border: 2.5px solid #000000;
+    border-bottom: 2.6px solid #0000ff;
+}
+
+.td-blue-right {
+    border: 2.5px solid #000000;
+    border-right: 2.6px solid #0000ff;
+}
