@@ -6,7 +6,7 @@ export default function ArrayList(props) {
             <tr>
                 {props.contents.map((element, i) => {
                     return(
-                        <td key={i} className = {`td${props.bluePosition === i ? '-blue' :
+                        <td key={i} className = {`td${props.bluePosition === i ? '-blue-left' :
                                               props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-right' : ''}`}> {element}</td>
                     )
                 })}

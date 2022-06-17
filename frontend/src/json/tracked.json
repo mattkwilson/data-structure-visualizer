@@ -58,6 +58,20 @@
           "structType":"java.util.HashMap",
           "name":"map",
           "lineNumber":10
+        },
+        {
+          "fileName":"Example.java",
+          "contents":"{2=baba, 3=dun}",
+          "structType":"java.util.HashMap",
+          "name":"map",
+          "lineNumber":10
+        },
+        {
+          "fileName":"Example.java",
+          "contents":"{2=baba}",
+          "structType":"java.util.HashMap",
+          "name":"map",
+          "lineNumber":10
         }
       ]
     }

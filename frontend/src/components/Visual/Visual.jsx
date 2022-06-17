@@ -12,7 +12,7 @@ const Visual = (props) => {
             return <ArrayList contents={props.contents} redPositions={props.redPositions} bluePosition={props.bluePosition}/>
         } else if (props.structType === "java.util.HashMap") {
             // setData(props.contents);
-            return <HashMap contents={props.contents}/>
+            return <HashMap contents={props.contents} redPositions={props.redPositions} bluePosition={props.bluePosition}/>
         }
     }
     

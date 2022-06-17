@@ -2,24 +2,16 @@ import './Visual.css';
 import arrow from '../../images/arrow.png';
 
 export default function HashMap(props) {
-    var params = props.contents.replace(/[{}]/g, "");
-    var entries = params.split(", ");
-    var array1 = [];
-    var array2 = [];
-    for (var i=0; i < entries.length; i++) {
-        let index = entries[i].indexOf("=")
-        var tokens = [entries[i].substring(0, index), entries[i].substring(index+1)]
-        array1.push(tokens[0]);
-        array2.push(tokens[1]);
-    }
-
+    var array1 = props.contents[0]
+    var array2 = props.contents[1]
     return (
         <div className="HashMap">
             <table>
                 {array1.map((element, i) => {
                     return(
                         <tr key={i}>
-                            <td className="td">{element}</td>
+                            <td className = {`td${props.bluePosition === i ? '-blue-top' :
+                                              props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-bottom' : ''}`}>{element}</td>
                         </tr>
                     )
                 })}
@@ -29,7 +21,8 @@ export default function HashMap(props) {
                 {array2.map((element, i) => {
                     return(
                         <tr key={i}>
-                            <td className="td">{element}</td>
+                            <td className = {`td${props.bluePosition === i ? '-blue-top' :
+                                              props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-bottom' : ''}`}>{element}</td>
                         </tr>
                     )
                 })}

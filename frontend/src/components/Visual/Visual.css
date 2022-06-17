@@ -41,9 +41,19 @@ td {
     border: 2.6px solid #ff0000;
 }
 
-.td-blue {
+.td-blue-left {
     border: 2.5px solid #000000;
     border-left: 2.6px solid #0000ff;
+}
+
+.td-blue-top {
+    border: 2.5px solid #000000;
+    border-top: 2.6px solid #0000ff;
+}
+
+.td-blue-bottom {
+    border: 2.5px solid #000000;
+    border-bottom: 2.6px solid #0000ff;
 }
 
 .td-blue-right {

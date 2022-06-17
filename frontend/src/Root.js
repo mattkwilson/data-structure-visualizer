@@ -23,6 +23,20 @@ function Root() {
                 var currContents;
                 if (currStep["structType"] === "ArrayList") {
                     currContents = JSON.parse(currStep["contents"])
+                } else if (currStep["structType"] === "java.util.HashMap") {
+                    // Converts hashmap string into two arrays
+                    var params = currStep["contents"].replace(/[{}]/g, "");
+                    var entries = params.split(", ");
+                    var array1 = [];
+                    var array2 = [];
+                    for (var i=0; i < entries.length; i++) {
+                        let index = entries[i].indexOf("=")
+                        var tokens = [entries[i].substring(0, index), entries[i].substring(index+1)]
+                        array1.push(tokens[0]);
+                        array2.push(tokens[1]);
+                    }
+                    currContents = [array1, array2]
+                    console.log(currContents);
                 } else {
                     currContents = currStep["contents"]
                 }
@@ -76,9 +90,19 @@ function Root() {
     }
 
     function redPositionHelper(bluePosition) {
-        if (structType === "ArrayList" && step !== 0 && bluePosition === -1) {
-            const newStepContents = array[currentData][step].contents;
-            const previousStepContents = array[currentData][step - 1].contents
+        if ((structType === "ArrayList" || structType === "java.util.HashMap") && step !== 0 && bluePosition === -1) {
+            var newStepContents;
+            var previousStepContents;
+            if (structType === "ArrayList") {
+                newStepContents = array[currentData][step].contents;
+            } else {
+                newStepContents = array[currentData][step].contents[0];
+            }
+            if (structType === "ArrayList") {
+                previousStepContents = array[currentData][step - 1].contents
+            } else {
+                previousStepContents = array[currentData][step - 1].contents[0]
+            }
             const redPositions = [];
             for (let i = 0; i < newStepContents.length; i++) {
                 if (previousStepContents[i] !== newStepContents[i]) {
@@ -86,15 +110,27 @@ function Root() {
                 }
             }
             setRedPositions(redPositions)
+        } else if (structType === "java.util.HashMap" && step !== 0 && bluePosition === -1){
+            
         } else {
             setRedPositions([])
         }
     }
 
     function bluePositionHelper() {
-        if (structType === "ArrayList" && step !== 0) {
-            const newStepContents = array[currentData][step].contents;
-            const previousStepContents = array[currentData][step - 1].contents
+        if ((structType === "ArrayList" || structType === "java.util.HashMap") && step !== 0) {
+            var newStepContents;
+            var previousStepContents;
+            if (structType === "ArrayList") {
+                newStepContents = array[currentData][step].contents;
+            } else {
+                newStepContents = array[currentData][step].contents[0];
+            }
+            if (structType === "ArrayList") {
+                previousStepContents = array[currentData][step - 1].contents
+            } else {
+                previousStepContents = array[currentData][step - 1].contents[0]
+            }
             if (newStepContents.length < previousStepContents.length) {
                 for (let i = 0; i < newStepContents.length; i++) {
                     if (previousStepContents[i] !== newStepContents[i]) {
