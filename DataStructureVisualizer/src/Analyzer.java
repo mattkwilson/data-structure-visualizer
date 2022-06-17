@@ -78,7 +78,7 @@ public class Analyzer {
         for (Structure struct: instanceMap.values()) {
             String structType = struct.type == Type.ARRAY ? "array" : "map";
             JSONObject temp = new JSONObject();
-            temp.put(structType, struct.states);
+            temp.put("array", struct.states);
             arr.put(temp);
         }
         toWrite.put("jsonFiles", arr);
