@@ -2,6 +2,15 @@
     text-align: center;
 }
 
+.HashMap {
+    display: flex;
+    flex-direction: row;
+}
+
+img {
+    background: transparent;
+}
+
 table {
     margin-left: auto;
     margin-right: auto;

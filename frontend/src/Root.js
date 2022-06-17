@@ -1,7 +1,7 @@
 import './Root.css';
 import Info from './components/Info/Info';
 import Visual from './components/Visual/Visual';
-import data from './json/sample.json';
+import data from './json/tracked.json';
 import {useState} from "react";
 
 function Root() {

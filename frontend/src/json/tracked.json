@@ -33,7 +33,7 @@
         {
           "fileName": "src/test.java",
           "line": 26,
-          "name": "arr2",
+          "name": "arr",
           "structType": "ArrayList",
           "contents": [
             13,
@@ -45,7 +45,7 @@
         {
           "fileName": "src/test2.java",
           "line": 32,
-          "name": "arr2",
+          "name": "arr",
           "structType": "ArrayList",
           "contents": [
             13,
@@ -53,36 +53,35 @@
             32,
             4
           ]
+        },
+        {
+          "fileName": "src/test2.java",
+          "line": 32,
+          "name": "arr",
+          "structType": "ArrayList",
+          "contents": [
+            13,
+            5,
+            32
+          ]
         }
       ]
     },
     {
       "array": [
         {
-          "fileName": "src/test2.java",
-          "line": 29,
-          "name": "arr3",
-          "structType": "ArrayList",
-          "contents": [
-            25,
-            4,
-            32,
-            4,
-            59
-          ]
+          "fileName":"Example.java",
+          "contents":"{1=Edvin, 2=baba}",
+          "structType":"java.util.HashMap",
+          "name":"map",
+          "lineNumber":9
         },
         {
-          "fileName": "src/test2.java",
-          "line": 32,
-          "name": "arr3",
-          "structType": "ArrayList",
-          "contents": [
-            25,
-            5,
-            32,
-            4,
-            39
-          ]
+          "fileName":"Example.java",
+          "contents":"{1=Edvin, 2=baba, 3=dun}",
+          "structType":"java.util.HashMap",
+          "name":"map",
+          "lineNumber":10
         }
       ]
     }
