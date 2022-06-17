@@ -21,10 +21,10 @@ function Root() {
             const temp = [];
             for (const currStep of json.array) {
                 var currContents;
-                if (currStep["structType"] === "ArrayList") {
+                if (currStep["structType"] === "Array") {
                     // if array is json array object
                     currContents = JSON.parse(currStep["contents"])
-                } else if (currStep["structType"] === "java.util.HashMap") {
+                } else if (currStep["structType"] === "Hashmap") {
                     // Converts hashmap string into two arrays
                     var params = currStep["contents"].replace(/[{}]/g, "");
                     var entries = params.split(", ");
