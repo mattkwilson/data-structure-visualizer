@@ -12,7 +12,9 @@ img {
 }
 
 table {
+    display: inline;
     margin-left: auto;
+    height: fit-content;
     margin-right: auto;
     font-family: arial, sans-serif;
     font-size: 25px;
