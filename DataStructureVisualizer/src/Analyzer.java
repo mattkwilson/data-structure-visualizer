@@ -46,7 +46,7 @@ public class Analyzer {
         return n;
     }
 
-    public static void analyze(Object object, int lineNumber, String[] linesOfCode) throws RuntimeException {
+    public static void analyze(Object object, int lineNumber, String... linesOfCode) throws RuntimeException {
         StackTraceElement stack = new Throwable().getStackTrace()[1];
         // Check if the object is one of the ones getting tracked
         if (!instanceMap.containsKey(System.identityHashCode(object))) {
