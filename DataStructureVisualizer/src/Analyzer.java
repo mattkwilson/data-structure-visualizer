@@ -33,7 +33,7 @@ public class Analyzer {
     private static int nextInstanceNumber = 0;
     private static final Map<Integer, Structure> instanceMap = new HashMap<>();
 
-    public static <T> T assign(T o, T n, String name) {
+    public static <T> T assign(T o, T n, String name, int lineNumber, String... linesOfCode) {
         Type type = n.getClass().getTypeName().contains("List") ? Type.ARRAY : Type.HASHMAP;
         if (o == null) {
             instanceMap.put(System.identityHashCode(n), new Structure(name, nextInstanceNumber, type));
@@ -43,11 +43,16 @@ public class Analyzer {
             instanceMap.remove(System.identityHashCode(o));
             instanceMap.put(System.identityHashCode(n), temp);
         }
+        analyze_(n, lineNumber, linesOfCode);
         return n;
     }
 
-    public static void analyze(Object object, int lineNumber, String... linesOfCode) throws RuntimeException {
-        StackTraceElement stack = new Throwable().getStackTrace()[1];
+    public static void analyze(Object object, int lineNumber, String... linesOfCode) {
+        analyze_(object, lineNumber, linesOfCode);
+    }
+
+    private static void analyze_(Object object, int lineNumber, String... linesOfCode) throws RuntimeException {
+        StackTraceElement stack = new Throwable().getStackTrace()[2];
         // Check if the object is one of the ones getting tracked
         if (!instanceMap.containsKey(System.identityHashCode(object))) {
             return;

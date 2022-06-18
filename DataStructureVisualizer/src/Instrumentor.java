@@ -181,12 +181,12 @@ public class Instrumentor {
         return new ExpressionStmt(analyzeExpression);
     }
 
-    private List<StringLiteralExpr> getLinesOfCode(MethodCallExpr expression, int amountBeforeExp, int amountAfterExp) {
-        if(expression.getRange().isPresent()) {
-            File file = getFileContainingExpression(expression);
+    private List<StringLiteralExpr> getLinesOfCode(Node node, int amountBeforeExp, int amountAfterExp) {
+        if(node.getRange().isPresent()) {
+            File file = getFileContainingExpression(node);
             try {
                 LineParser parser = new LineParser(file);
-                Range range = expression.getRange().get();
+                Range range = node.getRange().get();
                 int start = Math.max(range.begin.line - amountBeforeExp, 1);
                 int end = Math.min(range.end.line + amountAfterExp, parser.getNumberOfLines());
                 List<String> lines = parser.getLines(start, end);
@@ -197,16 +197,16 @@ public class Instrumentor {
                 throw new RuntimeException(e);
             }
         }
-        throw new RuntimeException("Expression is missing range: " + expression);
+        throw new RuntimeException("Expression is missing range: " + node);
     }
 
-    private File getFileContainingExpression(MethodCallExpr expression) {
-        CompilationUnit compilationUnit = (CompilationUnit) expression.findRootNode();
+    private File getFileContainingExpression(Node node) {
+        CompilationUnit compilationUnit = (CompilationUnit) node.findRootNode();
         if(compilationUnit.getStorage().isPresent()) {
             CompilationUnit.Storage storage = compilationUnit.getStorage().get();
             return storage.getPath().toFile();
         }
-        throw new RuntimeException("Could not find file for expression: " + expression);
+        throw new RuntimeException("Could not find file for expression: " + node);
     }
 
     private Expression getObjectForAnalyzer(MethodCallExpr expression) {
@@ -216,12 +216,12 @@ public class Instrumentor {
         throw new RuntimeException("Expression is missing scope: " + expression);
     }
 
-    private Expression getLineNumberExpression(MethodCallExpr expression) {
-        if(expression.getRange().isPresent()) {
-            Range range = expression.getRange().get();
+    private Expression getLineNumberExpression(Node node) {
+        if(node.getRange().isPresent()) {
+            Range range = node.getRange().get();
             return new IntegerLiteralExpr(range.begin.line);
         }
-        throw new RuntimeException("Expression is missing range: " + expression);
+        throw new RuntimeException("Expression is missing range: " + node);
     }
 
     private BlockStmt findParentBlockStmt(Expression expression) {
@@ -255,6 +255,8 @@ public class Instrumentor {
         assign.addArgument("null");
         assign.addArgument(declarator.getInitializer().get());
         assign.addArgument("\"" + fieldName + "\"");
+        assign.addArgument(getLineNumberExpression(declarator));
+        getLinesOfCode(declarator, 2, 2).forEach(assign::addArgument);
         declarator.setInitializer(assign);
         System.out.println("'" + declarator + "'");
     }
@@ -265,6 +267,8 @@ public class Instrumentor {
         assign.addArgument(expression.getTarget());
         assign.addArgument(expression.getValue());
         assign.addArgument("\"" + fieldName + "\"");
+        assign.addArgument(getLineNumberExpression(expression));
+        getLinesOfCode(expression, 2, 2).forEach(assign::addArgument);
         expression.setValue(assign);
         System.out.println("'" + expression + "'");
     }
