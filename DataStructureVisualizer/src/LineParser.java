@@ -24,13 +24,13 @@ public class LineParser {
         return lines.get(lineNumber - 1);
     }
 
-    // gets a range of lines from the file from start (inclusive) -> end (exclusive)
+    // gets a range of lines from the file from start (inclusive) -> end (inclusive)
     public List<String> getLines(int start, int end) {
         start = Math.max(start, 1);
         end = Math.min(end, getNumberOfLines());
 
         List<String> rangeOfLines = new ArrayList<>();
-        for(int i = start; i < end; i++) {
+        for(int i = start; i <= end; i++) {
             rangeOfLines.add(getLine(i));
         }
         return rangeOfLines;
