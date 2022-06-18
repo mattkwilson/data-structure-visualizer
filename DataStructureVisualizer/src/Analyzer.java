@@ -46,7 +46,7 @@ public class Analyzer {
         return n;
     }
 
-    public static void analyze(Object object, int lineNumber) throws RuntimeException {
+    public static void analyze(Object object, int lineNumber, String... linesOfCode) throws RuntimeException {
         StackTraceElement stack = new Throwable().getStackTrace()[1];
         // Check if the object is one of the ones getting tracked
         if (!instanceMap.containsKey(System.identityHashCode(object))) {
@@ -66,6 +66,7 @@ public class Analyzer {
         state.put("name", structure.name);
         state.put("structType", structType);
         state.put("contents", contents);
+        state.put("code", linesOfCode);
 
         // Add the recent state to the states
         structure.states.put(state);
