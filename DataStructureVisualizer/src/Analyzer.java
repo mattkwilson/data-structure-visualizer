@@ -46,7 +46,7 @@ public class Analyzer {
         return n;
     }
 
-    public static void analyze(Object object) throws RuntimeException {
+    public static void analyze(Object object, int lineNumber) throws RuntimeException {
         StackTraceElement stack = new Throwable().getStackTrace()[1];
         // Check if the object is one of the ones getting tracked
         if (!instanceMap.containsKey(System.identityHashCode(object))) {
@@ -56,7 +56,6 @@ public class Analyzer {
         // Fetch the required data for json
         Structure structure = instanceMap.get(System.identityHashCode(object));
         String fileName = stack.getFileName();
-        int lineNumber = stack.getLineNumber();
         String contents = object.toString();
         String structType = structure.type == Type.ARRAY ? "Array" : "Hashmap";
 
