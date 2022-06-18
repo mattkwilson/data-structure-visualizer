@@ -50,6 +50,8 @@ public class Instrumentor {
 
     private MethodDeclaration mainMethod;
 
+    private LineParser lineParser;
+
     public Instrumentor(String className, String fieldName, List<CompilationUnit> cus) {
         compilationUnits = cus;
         this.className = className;
@@ -173,8 +175,38 @@ public class Instrumentor {
         NodeList<Expression> args = new NodeList<>();
         args.add(getObjectForAnalyzer(expression));
         args.add(getLineNumberExpression(expression));
+        List<StringLiteralExpr> lines = getLinesOfCode(expression, 2, 2);
+        args.addAll(lines);
         Expression analyzeExpression = new MethodCallExpr(scope, new SimpleName("analyze"), args);
         return new ExpressionStmt(analyzeExpression);
+    }
+
+    private List<StringLiteralExpr> getLinesOfCode(MethodCallExpr expression, int amountBeforeExp, int amountAfterExp) {
+        if(expression.getRange().isPresent()) {
+            File file = getFileContainingExpression(expression);
+            try {
+                LineParser parser = new LineParser(file);
+                Range range = expression.getRange().get();
+                int start = Math.max(range.begin.line - amountBeforeExp, 1);
+                int end = Math.min(range.end.line + amountAfterExp, parser.getNumberOfLines());
+                List<String> lines = parser.getLines(start, end);
+                List<StringLiteralExpr> lineExpressions = new ArrayList<>();
+                lines.forEach(line -> lineExpressions.add(new StringLiteralExpr(line)));
+                return lineExpressions;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        throw new RuntimeException("Expression is missing range: " + expression);
+    }
+
+    private File getFileContainingExpression(MethodCallExpr expression) {
+        CompilationUnit compilationUnit = (CompilationUnit) expression.findRootNode();
+        if(compilationUnit.getStorage().isPresent()) {
+            CompilationUnit.Storage storage = compilationUnit.getStorage().get();
+            return storage.getPath().toFile();
+        }
+        throw new RuntimeException("Could not find file for expression: " + expression);
     }
 
     private Expression getObjectForAnalyzer(MethodCallExpr expression) {
