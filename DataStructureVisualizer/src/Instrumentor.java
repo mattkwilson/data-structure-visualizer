@@ -1,5 +1,6 @@
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseResult;
+import com.github.javaparser.Range;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
@@ -171,6 +172,7 @@ public class Instrumentor {
         Expression scope = new NameExpr(new SimpleName("Analyzer"));
         NodeList<Expression> args = new NodeList<>();
         args.add(getObjectForAnalyzer(expression));
+        args.add(getLineNumberExpression(expression));
         Expression analyzeExpression = new MethodCallExpr(scope, new SimpleName("analyze"), args);
         return new ExpressionStmt(analyzeExpression);
     }
@@ -180,6 +182,14 @@ public class Instrumentor {
             return expression.getScope().get();
         }
         throw new RuntimeException("Expression is missing scope: " + expression);
+    }
+
+    private Expression getLineNumberExpression(MethodCallExpr expression) {
+        if(expression.getRange().isPresent()) {
+            Range range = expression.getRange().get();
+            return new IntegerLiteralExpr(range.begin.line);
+        }
+        throw new RuntimeException("Expression is missing range: " + expression);
     }
 
     private BlockStmt findParentBlockStmt(Expression expression) {
