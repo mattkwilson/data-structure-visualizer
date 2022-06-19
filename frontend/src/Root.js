@@ -1,6 +1,7 @@
 import './Root.css';
 import Info from './components/Info/Info';
 import Visual from './components/Visual/Visual';
+import StepList from './components/StepList/StepList'
 import data from './json/tracked.json';
 import {useState} from "react";
 
@@ -143,10 +144,14 @@ function Root() {
         return -1;
     }
 
+    function handleClickStep(i) {
+        setStep(step = i)
+        setStepData()
+    }
     // readJson()
     return (
         <div>
-            <div className="left">
+            {/* <div className="left">
                 <div className="centered">
                     <Info fileName={fileName} line={line}
                           name={name} structType={structType}/>
@@ -174,6 +179,9 @@ function Root() {
                         </div>
                     </div>
                 </div>
+            </div> */}
+            <div className="stepList">
+                <StepList step={step} handleClickStep={handleClickStep} length={array[currentData].length}/>
             </div>
         </div>
     )

@@ -100,3 +100,8 @@
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.stepList {
+    width: 25%;
+    right:0;
+}
