@@ -29,7 +29,7 @@
 .visualization {
     text-align: center;
     position: absolute;
-    left: 40vw;
+    width: 100%;
 }
 
 .codeBar {
@@ -92,10 +92,11 @@
 
 .dropdown-content {
     display: none;
-    margin-left: -0.1vw;
+    
     width: 20vw;
     height: fit-content;
     position: absolute;
+    text-align: center;
 }
 
 .dropdown-content .variable {
