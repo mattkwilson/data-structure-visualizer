@@ -1,6 +1,9 @@
 .Code {
   white-space: nowrap;
-  left: 0;
+}
+
+h3 {
+  margin-left: 1vw;
 }
 
 .code-text {

@@ -1,10 +1,13 @@
 .Info {
   white-space: nowrap;
-  left: 0;
 }
 
 h1 {
   text-align: center;
+}
+
+h2 {
+  margin-left: 1vw;
 }
 
 .text, h3 {
