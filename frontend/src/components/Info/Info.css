@@ -1,15 +1,19 @@
 .App {
-  text-align: center;
+  white-space: nowrap;
+  left: 0;
+}
+
+h1{
+  text-align: left;
   white-space: nowrap;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h2 {
+  text-align: left;
+  white-space: nowrap;
+}
+
+h3 {
+  text-align: left;
+  white-space: nowrap;
 }

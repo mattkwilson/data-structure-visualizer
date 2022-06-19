@@ -12,6 +12,7 @@ function Root() {
     const [line, setLine] = useState();
     const [name, setName] = useState();
     const [structType, setStructType] = useState();
+    const [code, setCode] = useState(['','','','','']);
     const [contents, setContents] = useState();
     const [redPositions, setRedPositions] = useState([]);
     const [bluePosition, setBluePosition] = useState(-1);
@@ -46,6 +47,7 @@ function Root() {
                     "line": currStep["lineNumber"],
                     "name": currStep["name"],
                     "structType": currStep["structType"],
+                    "code": currStep["code"],
                     "contents": currContents
                 })
             }
@@ -84,6 +86,7 @@ function Root() {
         setLine(array[currentData][step].line)
         setName(array[currentData][step].name)
         setStructType(array[currentData][step].structType)
+        setCode(array[currentData][step].code)
         let bluePosition = bluePositionHelper()
         setBluePosition(bluePosition)
         redPositionHelper(bluePosition)
@@ -153,9 +156,9 @@ function Root() {
     return (
         <div>
             <div className="left">
-                <div className="centered">
+                <div className="leftie">
                     <Info fileName={fileName} line={line}
-                          name={name} structType={structType}/>
+                          name={name} structType={structType} code0={code[0]} code1={code[1]} code2={code[2]} code3={code[3]} code4={code[4]}/>
                 </div>
 
             </div>

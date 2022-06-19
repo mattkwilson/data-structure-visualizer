@@ -30,6 +30,13 @@
     text-align: center;
 }
 
+.leftie {
+    position: absolute;
+    margin-top: 5vh;
+    margin-left: 3vw;
+    text-align: center;
+}
+
 .stepButton {
     font-size: 16px;
     margin-top: 2vh;
