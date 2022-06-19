@@ -1,8 +1,12 @@
 
 .stepList {
     display: flex;
+    width: 15vw;
+    height: 80vh;
+    overflow: auto;
     flex-direction: column;
 }
+
 
 .setStepButton {
     font-size: 14px;

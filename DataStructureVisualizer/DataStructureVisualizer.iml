@@ -15,5 +15,6 @@
     <orderEntry type="library" name="github.javaparser.core1" level="project" />
     <orderEntry type="library" name="json" level="project" />
     <orderEntry type="library" name="github.javaparser.symbol.solver.core" level="project" />
+    <orderEntry type="library" name="github.javaparser.core" level="project" />
   </component>
 </module>

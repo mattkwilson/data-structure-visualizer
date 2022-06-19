@@ -6,9 +6,17 @@
     background-color: #F0F0F0
 }
 
+.middle {
+    height: 100%;
+    width: 40%;
+    position: fixed;
+    left: 30vw;
+    background-color: #F0F0F0;
+}
+
 .right {
     height: 100%;
-    width: 70%;
+    width: 30%;
     position: fixed;
     right: 0;
     background-color: #F0F0F0;
@@ -70,7 +78,7 @@
 
 .dropdown-content {
     display: none;
-    margin-left: 7.4vw;
+    margin-left: -0.1vw;
     width: 20vw;
     height: fit-content;
     position: absolute;

@@ -31,9 +31,9 @@ function Root() {
                     var entries = params.split(", ");
                     var array1 = [];
                     var array2 = [];
-                    for (var i=0; i < entries.length; i++) {
+                    for (var i = 0; i < entries.length; i++) {
                         let index = entries[i].indexOf("=")
-                        var tokens = [entries[i].substring(0, index), entries[i].substring(index+1)]
+                        var tokens = [entries[i].substring(0, index), entries[i].substring(index + 1)]
                         array1.push(tokens[0]);
                         array2.push(tokens[1]);
                     }
@@ -111,8 +111,8 @@ function Root() {
                 }
             }
             setRedPositions(redPositions)
-        } else if (structType === "Hashmap" && step !== 0 && bluePosition === -1){
-            
+        } else if (structType === "Hashmap" && step !== 0 && bluePosition === -1) {
+
         } else {
             setRedPositions([])
         }
@@ -148,10 +148,11 @@ function Root() {
         setStep(step = i)
         setStepData()
     }
+
     // readJson()
     return (
         <div>
-            {/* <div className="left">
+            <div className="left">
                 <div className="centered">
                     <Info fileName={fileName} line={line}
                           name={name} structType={structType}/>
@@ -159,7 +160,7 @@ function Root() {
 
             </div>
 
-            <div className="right">
+            <div className="middle">
                 <div className="centered">
                     <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}
                             bluePosition={bluePosition}/>
@@ -171,7 +172,7 @@ function Root() {
                             {array.map((dataStruct, index) => {
                                 return (
                                     <div className={'variable'} key={index}
-                                           onClick={() => onClickData(index)}>
+                                         onClick={() => onClickData(index)}>
                                         {dataStruct[0].name}
                                     </div>
                                 )
@@ -179,10 +180,15 @@ function Root() {
                         </div>
                     </div>
                 </div>
-            </div> */}
-            <div className="stepList">
-                <StepList step={step} handleClickStep={handleClickStep} length={array[currentData].length}/>
             </div>
+            <div className="right">
+                <div className="centered">
+                    <div className="stepList">
+                        <StepList step={step} handleClickStep={handleClickStep} length={array[currentData].length}/>
+                    </div>
+                </div>
+            </div>
+
         </div>
     )
 }
