@@ -7,7 +7,6 @@
 }
 
 .horiz-container {
-    flex-grow: 1;
     width: 100vw;
 }
 
@@ -40,9 +39,9 @@
 }
 
 .sidebar {
-    position: absolute;
-    right: 0;
-    text-align: center;
+    position: fixed;
+    width: 20%;
+    right:0;
 }
 
 .stepButton {
@@ -92,7 +91,7 @@
 
 .dropdown-content {
     display: none;
-    
+    margin-left: 39.9vw;
     width: 20vw;
     height: fit-content;
     position: absolute;

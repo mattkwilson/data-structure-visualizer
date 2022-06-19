@@ -1,7 +1,7 @@
 
 .stepList {
     display: flex;
-    width: 100%;
+    height: 80vh;
     overflow: auto;
     flex-direction: column;
 }
