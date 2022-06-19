@@ -17,28 +17,31 @@ export default function HashMap(props) {
     })
 
     return (
-        <div className="HashMap">
-            <table id='tableDiv'>
-                {array1.map((element, i) => {
-                    return(
-                        <tr key={i}>
-                            <td className = {`td${props.bluePosition === i ? '-blue-top' :
-                                              props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-bottom' : ''}`}>{element}</td>
-                        </tr>
-                    )
-                })}
-            </table>
-            <img src={arrow} alt="->" id='img' height={imageHeight}/>
-            <table>
-                {array2.map((element, i) => {
-                    return(
-                        <tr key={i}>
-                            <td className = {`td${props.bluePosition === i ? '-blue-top' :
-                                              props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-bottom' : ''}`}>{element}</td>
-                        </tr>
-                    )
-                })}
-            </table>
+        <div className="center">
+            <div className="HashMap">
+                <table id='tableDiv'>
+                    {array1.map((element, i) => {
+                        return(
+                            <tr key={i}>
+                                <td className = {`td${props.bluePosition === i ? '-blue-top' :
+                                    props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-bottom' : ''}`}>{element}</td>
+                            </tr>
+                        )
+                    })}
+                </table>
+                <img src={arrow} alt="->" id='img' height={imageHeight}/>
+                <table>
+                    {array2.map((element, i) => {
+                        return(
+                            <tr key={i}>
+                                <td className = {`td${props.bluePosition === i ? '-blue-top' :
+                                    props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-bottom' : ''}`}>{element}</td>
+                            </tr>
+                        )
+                    })}
+                </table>
+            </div>
         </div>
+
     )
 }

@@ -2,9 +2,20 @@
     text-align: center;
 }
 
+.header {
+
+    text-align: center;
+}
+
+.center {
+    width: 30vw;
+    margin: 0 auto;
+}
+
 .HashMap {
     display: flex;
     flex-direction: row;
+    width: fit-content;
 }
 
 img {
@@ -15,6 +26,7 @@ table {
     display: inline;
     margin-left: auto;
     height: fit-content;
+    width: fit-content;
     margin-right: auto;
     font-family: arial, sans-serif;
     font-size: 25px;
@@ -36,6 +48,7 @@ td {
     border: 2.5px solid #000000;
     text-align: center;
     min-width: 2vw;
+    height: 1.5vw;
     padding: 8px;
 }
 

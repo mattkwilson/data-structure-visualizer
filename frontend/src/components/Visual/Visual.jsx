@@ -18,9 +18,8 @@ const Visual = (props) => {
     
     return (
         <div className="App">
-            <h1>{props.name}</h1>
+            <br/>
             <DisplayVisual />
-            
         </div>
     );
 }
