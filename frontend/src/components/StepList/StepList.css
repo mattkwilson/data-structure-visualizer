@@ -1,0 +1,39 @@
+
+.stepList {
+    display: flex;
+    width: 15vw;
+    height: 80vh;
+    overflow: auto;
+    flex-direction: column;
+}
+
+
+.setStepButton {
+    font-size: 14px;
+    display: inline;
+    background-color: white;
+    border: 1px solid #1e3821;
+    color: #1e3821;
+    text-align: center;
+    padding: 12px 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.setStepButton-selected {
+    font-size: 14px;
+    display: inline;
+    background-color: white;
+    border: 3px solid #000000;
+    text-align: center;
+    padding: 12px 8px;
+    transition: 0.1s;
+}
+
+.setStepButton:hover {
+    background-color: #1e3821;
+    color: white;
+    text-align: center;
+}
+
+

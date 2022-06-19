@@ -6,9 +6,17 @@
     background-color: #F0F0F0
 }
 
+.middle {
+    height: 100%;
+    width: 40%;
+    position: fixed;
+    left: 30vw;
+    background-color: #F0F0F0;
+}
+
 .right {
     height: 100%;
-    width: 70%;
+    width: 30%;
     position: fixed;
     right: 0;
     background-color: #F0F0F0;
@@ -19,6 +27,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.leftie {
+    position: absolute;
+    margin-top: 5vh;
+    margin-left: 3vw;
     text-align: center;
 }
 
@@ -70,7 +85,7 @@
 
 .dropdown-content {
     display: none;
-    margin-left: 7.4vw;
+    margin-left: -0.1vw;
     width: 20vw;
     height: fit-content;
     position: absolute;
@@ -99,4 +114,9 @@
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.stepList {
+    width: 25%;
+    right:0;
 }
