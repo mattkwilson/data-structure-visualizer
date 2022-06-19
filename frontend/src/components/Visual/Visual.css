@@ -2,6 +2,11 @@
     text-align: center;
 }
 
+.header {
+
+    text-align: center;
+}
+
 .HashMap {
     display: flex;
     flex-direction: row;

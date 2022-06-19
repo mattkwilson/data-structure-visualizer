@@ -1,0 +1,20 @@
+.Code {
+  white-space: nowrap;
+  left: 0;
+}
+
+.code-text {
+  margin: 0 0 0 0;
+  text-align: left;
+  font-weight: 1px;
+  font-style: normal;
+  font-size: medium;
+  color: rgb(222, 212, 197);
+  background-color: rgb(37, 35, 35);
+  font-family: Consolas;
+}
+
+.code-highlighted {
+  color: rgb(222, 212, 197);
+  background-color: rgb(65, 67, 52);
+}

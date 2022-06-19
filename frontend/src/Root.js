@@ -1,5 +1,6 @@
 import './Root.css';
 import Info from './components/Info/Info';
+import Code from './components/Code/Code';
 import Visual from './components/Visual/Visual';
 import StepList from './components/StepList/StepList'
 import data from './json/tracked.json';
@@ -154,44 +155,44 @@ function Root() {
 
     // readJson()
     return (
-        <div>
-            <div className="left">
-                <div className="leftie">
-                    <Info fileName={fileName} line={line}
-                          name={name} structType={structType} code0={code[0]} code1={code[1]} code2={code[2]} code3={code[3]} code4={code[4]}/>
+        <div className="vert-container">
+            <div className="titlebar">
+                <h1 className='title'>Data Structure Visualizer</h1>
+            </div>
+            <div className="horiz-container">
+                <div className="infoBar">
+                    <Info fileName={fileName} line={line} name={name} structType={structType}/>
                 </div>
 
-            </div>
-
-            <div className="middle">
-                <div className="centered">
+                <div className="visualization">
+                    <div className="header">
+                        <h2>Visualizing: {name}</h2>
+                        <div className="dropdown">
+                            <button>Select Instance</button>
+                            <div className="dropdown-content">
+                                {array.map((dataStruct, index) => {
+                                    return (
+                                        <div className={'variable'} key={index}
+                                            onClick={() => onClickData(index)}>
+                                            {dataStruct[0].name + " instance " + index}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
                     <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}
                             bluePosition={bluePosition}/>
                     <input className="stepButton" type='button' value='Previous Step' onClick={onClickPrevious}/>
                     <input className="stepButton" type='button' value='Next Step' onClick={onClickNext}/>
-                    <div className="dropdown">
-                        <button>Variables</button>
-                        <div className="dropdown-content">
-                            {array.map((dataStruct, index) => {
-                                return (
-                                    <div className={'variable'} key={index}
-                                         onClick={() => onClickData(index)}>
-                                        {dataStruct[0].name}
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
+                </div>
+                <div className="sidebar">
+                    <StepList step={step} handleClickStep={handleClickStep} length={array[currentData].length}/>
+                </div>
+                <div className="codeBar">
+                    <Code line={line} code0={code[0]} code1={code[1]} code2={code[2]} code3={code[3]} code4={code[4]}/>
                 </div>
             </div>
-            <div className="right">
-                <div className="centered">
-                    <div className="stepList">
-                        <StepList step={step} handleClickStep={handleClickStep} length={array[currentData].length}/>
-                    </div>
-                </div>
-            </div>
-
         </div>
     )
 }

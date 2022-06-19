@@ -1,46 +1,53 @@
-.left {
-    height: 100%;
-    width: 30%;
-    position: fixed;
-    left: 0;
+.vert-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100vh;
     background-color: #F0F0F0
 }
 
-.middle {
-    height: 100%;
-    width: 40%;
-    position: fixed;
-    left: 30vw;
-    background-color: #F0F0F0;
+.horiz-container {
+    flex-grow: 1;
+    width: 100vw;
 }
 
-.right {
-    height: 100%;
-    width: 30%;
-    position: fixed;
-    right: 0;
-    background-color: #F0F0F0;
+.titlebar {
+    background-color: #3d3d3d
 }
 
-.centered {
+.title {
+    font-size: xx-large;
+    color: rgb(255, 255, 255);
+}
+
+.infoBar {
+    text-align: center;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 0;
+}
+
+.visualization {
+    text-align: center;
+    position: absolute;
+    left: 40vw;
+}
+
+.codeBar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
     text-align: center;
 }
 
-.leftie {
+.sidebar {
     position: absolute;
-    margin-top: 5vh;
-    margin-left: 3vw;
+    right: 0;
     text-align: center;
 }
 
 .stepButton {
     font-size: 16px;
     margin-top: 2vh;
-    width: 10vw;
     display: inline;
     background-color: white;
     border: 1px solid #1e3821;
@@ -116,7 +123,3 @@
     display: block;
 }
 
-.stepList {
-    width: 25%;
-    right:0;
-}

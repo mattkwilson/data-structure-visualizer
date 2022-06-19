@@ -21,7 +21,7 @@ public class LineParser {
     }
 
     public String getLine(int lineNumber) {
-        return lines.get(lineNumber - 1);
+        return lineNumber + " " + lines.get(lineNumber - 1);
     }
 
     // gets a range of lines from the file from start (inclusive) -> end (inclusive)
