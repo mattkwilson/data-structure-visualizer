@@ -1,3 +1,8 @@
+/**
+ * CSS code for dropdown menu are adapted from
+ * a previous project (cpsc 304 2022W) I, Edvin, had written
+ * */
+
 .vert-container {
     display: flex;
     flex-direction: column;

@@ -158,7 +158,6 @@ function Root() {
         setStepData()
     }
 
-    // readJson()
     return (
         <div className="vert-container">
             <div className="titlebar">
