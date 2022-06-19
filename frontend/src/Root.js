@@ -17,6 +17,7 @@ function Root() {
     const [contents, setContents] = useState();
     const [redPositions, setRedPositions] = useState([]);
     const [bluePosition, setBluePosition] = useState(-1);
+    const [index, setIndex] = useState('');
     let [currentData, setCurrentData] = useState(0);
 
     function readJson() {
@@ -70,6 +71,9 @@ function Root() {
         if (step < (array[currentData].length - 1)) {
             setStep(++step)
             setStepData()
+            if(index === '') {
+                setIndex('0')
+            }
         }
 
     }
@@ -78,6 +82,7 @@ function Root() {
         if (index !== currentData || step === -1) {
             setCurrentData(currentData = index)
             setStep(step = 0)
+            setIndex(index)
             setStepData()
         }
     };
@@ -166,7 +171,7 @@ function Root() {
 
                 <div className="visualization">
                     <div className="header">
-                        <h2>Visualizing: {name}</h2>
+                        <h2>Visualizing: {name} {index}</h2>
                         <div className="dropdown">
                             <button>Select Instance</button>
                             <div className="dropdown-content">
@@ -180,11 +185,13 @@ function Root() {
                                 })}
                             </div>
                         </div>
+                        <input className="stepButton" type='button' value='Previous Step' onClick={onClickPrevious}/>
+                        <input className="stepButton" type='button' value='Next Step' onClick={onClickNext}/>
                     </div>
+
                     <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}
                             bluePosition={bluePosition}/>
-                    <input className="stepButton" type='button' value='Previous Step' onClick={onClickPrevious}/>
-                    <input className="stepButton" type='button' value='Next Step' onClick={onClickNext}/>
+
                 </div>
                 <div className="sidebar">
                     <StepList step={step} handleClickStep={handleClickStep} length={array[currentData].length}/>

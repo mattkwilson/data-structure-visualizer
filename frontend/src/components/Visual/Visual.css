@@ -7,9 +7,15 @@
     text-align: center;
 }
 
+.center {
+    width: 30vw;
+    margin: 0 auto;
+}
+
 .HashMap {
     display: flex;
     flex-direction: row;
+    width: fit-content;
 }
 
 img {
@@ -20,6 +26,7 @@ table {
     display: inline;
     margin-left: auto;
     height: fit-content;
+    width: fit-content;
     margin-right: auto;
     font-family: arial, sans-serif;
     font-size: 25px;
