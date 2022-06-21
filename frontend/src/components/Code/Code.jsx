@@ -1,5 +1,4 @@
 import './Code.css'
-import {useState} from "react";
 
 const Code = (props) => {
 

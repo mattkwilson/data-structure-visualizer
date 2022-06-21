@@ -52,26 +52,27 @@ td {
     padding: 8px;
 }
 
-.td-red {
-    border: 2.6px solid #ff0000;
+.td-green {
+    border: 2.6px solid #000000;
+    background-color: #94ff9d;
 }
 
-.td-blue-left {
+.td-red-left {
     border: 2.5px solid #000000;
-    border-left: 2.6px solid #0000ff;
+    border-left: 4px solid #ff0000;
 }
 
-.td-blue-top {
+.td-red-top {
     border: 2.5px solid #000000;
-    border-top: 2.6px solid #0000ff;
+    border-top: 3px solid #ff0000;
 }
 
-.td-blue-bottom {
+.td-red-bottom {
     border: 2.5px solid #000000;
-    border-bottom: 2.6px solid #0000ff;
+    border-bottom: 3px solid #ff0000;
 }
 
-.td-blue-right {
+.td-red-right {
     border: 2.5px solid #000000;
-    border-right: 2.6px solid #0000ff;
+    border-right: 3px solid #ff0000;
 }

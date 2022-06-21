@@ -1,18 +1,14 @@
 import './Visual.css';
 import ArrayList from './ArrayList';
 import HashMap from './HashMap';
-// import {useState} from "react";
 
 const Visual = (props) => {
-    // const [data, setData] = useState([]);
     
     function DisplayVisual() {
         if (props.structType === "Array") {
-            // setData(props.contents);
-            return <ArrayList contents={props.contents} redPositions={props.redPositions} bluePosition={props.bluePosition}/>
+            return <ArrayList contents={props.contents} greenPositions={props.greenPositions} redPosition={props.redPosition}/>
         } else if (props.structType === "Hashmap") {
-            // setData(props.contents);
-            return <HashMap contents={props.contents} redPositions={props.redPositions} bluePosition={props.bluePosition}/>
+            return <HashMap contents={props.contents} greenPositions={props.greenPositions} redPosition={props.redPosition}/>
         }
     }
     

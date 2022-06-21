@@ -23,8 +23,8 @@ export default function HashMap(props) {
                     {array1.map((element, i) => {
                         return(
                             <tr key={i}>
-                                <td className = {`td${props.bluePosition === i ? '-blue-top' :
-                                    props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-bottom' : ''}`}>{element}</td>
+                                <td className = {`td${props.redPosition === i ? '-red-top' :
+                                    props.greenPositions.includes(i) ? '-green' : props.redPosition === i+1 ? '-red-bottom' : ''}`}>{element}</td>
                             </tr>
                         )
                     })}
@@ -34,8 +34,8 @@ export default function HashMap(props) {
                     {array2.map((element, i) => {
                         return(
                             <tr key={i}>
-                                <td className = {`td${props.bluePosition === i ? '-blue-top' :
-                                    props.redPositions.includes(i) ? '-red' : props.bluePosition === i+1 ? '-blue-bottom' : ''}`}>{element}</td>
+                                <td className = {`td${props.redPosition === i ? '-red-top' :
+                                    props.greenPositions.includes(i) ? '-green' : props.redPosition === i+1 ? '-red-bottom' : ''}`}>{element}</td>
                             </tr>
                         )
                     })}

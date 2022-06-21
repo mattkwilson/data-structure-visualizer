@@ -15,8 +15,8 @@ function Root() {
     const [structType, setStructType] = useState();
     const [code, setCode] = useState(['','','','','']);
     const [contents, setContents] = useState();
-    const [redPositions, setRedPositions] = useState([]);
-    const [bluePosition, setBluePosition] = useState(-1);
+    const [greenPositions, setGreenPositions] = useState([]);
+    const [redPosition, setRedPosition] = useState(-1);
     const [index, setIndex] = useState('');
     let [currentData, setCurrentData] = useState(0);
 
@@ -93,14 +93,14 @@ function Root() {
         setName(array[currentData][step].name)
         setStructType(array[currentData][step].structType)
         setCode(array[currentData][step].code)
-        let bluePosition = bluePositionHelper()
-        setBluePosition(bluePosition)
-        redPositionHelper(bluePosition)
+        let redPosition = redPositionHelper()
+        setRedPosition(redPosition)
+        greenPositionHelper(redPosition)
         setContents(array[currentData][step].contents)
     }
 
-    function redPositionHelper(bluePosition) {
-        if ((structType === "Array" || structType === "Hashmap") && step !== 0 && bluePosition === -1) {
+    function greenPositionHelper(redPosition) {
+        if ((structType === "Array" || structType === "Hashmap") && step !== 0 && redPosition === -1) {
             var newStepContents;
             var previousStepContents;
             if (structType === "Array") {
@@ -113,21 +113,21 @@ function Root() {
             } else {
                 previousStepContents = array[currentData][step - 1].contents[1]
             }
-            const redPositions = [];
+            const greenPositions = [];
             for (let i = 0; i < newStepContents.length; i++) {
                 if (previousStepContents[i] !== newStepContents[i]) {
-                    redPositions.push(i);
+                    greenPositions.push(i);
                 }
             }
-            setRedPositions(redPositions)
-        } else if (structType === "Hashmap" && step !== 0 && bluePosition === -1) {
+            setGreenPositions(greenPositions)
+        } else if (structType === "Hashmap" && step !== 0 && redPosition === -1) {
 
         } else {
-            setRedPositions([])
+            setGreenPositions([])
         }
     }
 
-    function bluePositionHelper() {
+    function redPositionHelper() {
         if ((structType === "Array" || structType === "Hashmap") && step !== 0) {
             var newStepContents;
             var previousStepContents;
@@ -188,8 +188,8 @@ function Root() {
                         <input className="stepButton" type='button' value='Next Step' onClick={onClickNext}/>
                     </div>
 
-                    <Visual name={name} contents={contents} structType={structType} redPositions={redPositions}
-                            bluePosition={bluePosition}/>
+                    <Visual name={name} contents={contents} structType={structType} greenPositions={greenPositions}
+                            redPosition={redPosition}/>
 
                 </div>
                 <div className="sidebar">
