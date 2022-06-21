@@ -106,12 +106,12 @@ function Root() {
             if (structType === "Array") {
                 newStepContents = array[currentData][step].contents;
             } else {
-                newStepContents = array[currentData][step].contents[0];
+                newStepContents = array[currentData][step].contents[1];
             }
             if (structType === "Array") {
                 previousStepContents = array[currentData][step - 1].contents
             } else {
-                previousStepContents = array[currentData][step - 1].contents[0]
+                previousStepContents = array[currentData][step - 1].contents[1]
             }
             const redPositions = [];
             for (let i = 0; i < newStepContents.length; i++) {
@@ -134,12 +134,12 @@ function Root() {
             if (structType === "Array") {
                 newStepContents = array[currentData][step].contents;
             } else {
-                newStepContents = array[currentData][step].contents[0];
+                newStepContents = array[currentData][step].contents[1];
             }
             if (structType === "Array") {
                 previousStepContents = array[currentData][step - 1].contents
             } else {
-                previousStepContents = array[currentData][step - 1].contents[0]
+                previousStepContents = array[currentData][step - 1].contents[1]
             }
             if (newStepContents.length < previousStepContents.length) {
                 for (let i = 0; i < newStepContents.length; i++) {
