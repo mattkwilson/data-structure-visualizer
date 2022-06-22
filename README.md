@@ -1,6 +1,6 @@
 # Data Structure Visualizer
 
-## How to run the project (Windows)
+## How to run the project (this has only been tested on Windows)
 
 1. Open the project in Intellij and set up configuration for running the DataStructureVisualizer.java class
 2. Edit the configuration, and set the command line arguments in this order:
