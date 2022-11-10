@@ -1,5 +1,7 @@
 # Data Structure Visualizer
 
+https://user-images.githubusercontent.com/11277442/201185969-34bddf5b-2b71-4846-bf47-e30ef1cc9b00.mp4
+
 ## How to run the project (note: this has only been tested on Windows)
 
 1. Open the project in Intellij and set up configuration for running the DataStructureVisualizer.java class
