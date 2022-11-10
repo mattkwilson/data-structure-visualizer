@@ -14,6 +14,12 @@
    2. npm Start
 6. Launch the React frontend in browser to see the visualization
 
+## Contributors
+ - [Mert Kipcak](https://github.com/mertkipcak)
+ - [Jeffrey Guo](https://github.com/jeffxguo)
+ - [Edvin Keskin](https://github.com/edvinkeskin)
+ - [Tarek Al-Ayoubi](https://github.com/tarek20501)
+ - [Matt Wilson](https://github.com/mattwilson720)
 
 # Milestone 1
 
