@@ -15,10 +15,10 @@
 6. Launch the React frontend in browser to see the visualization
 
 ## Contributors
- - [Mert Kipcak](https://github.com/mertkipcak)
+ - [Tarek Al-Ayoubi](https://github.com/tarek20501)
  - [Jeffrey Guo](https://github.com/jeffxguo)
  - [Edvin Keskin](https://github.com/edvinkeskin)
- - [Tarek Al-Ayoubi](https://github.com/tarek20501)
+ - [Mert Kipcak](https://github.com/mertkipcak)
  - [Matt Wilson](https://github.com/mattwilson720)
 
 # Milestone 1
